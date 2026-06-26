@@ -1,170 +1,900 @@
-<!DOCTYPE html>
-<html lang="fr">
+/* ==========================================
+   RESET
+========================================== */
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
 
-    <title>Ishak Anida | Portfolio</title>
+html{
+    scroll-behavior:smooth;
+}
 
-    <link rel="stylesheet" href="style.css">
+body{
+    font-family:'Poppins',sans-serif;
+    background:#090909;
+    color:#ffffff;
+    overflow-x:hidden;
+    min-height:100vh;
+}
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+a{
+    text-decoration:none;
+    color:inherit;
+}
 
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Noto+Sans+JP:wght@300;400;700&display=swap" rel="stylesheet">
-</head>
+ul{
+    list-style:none;
+}
 
-<body>
+img{
+    max-width:100%;
+    display:block;
+}
 
-<header>
+.container{
+    width:90%;
+    max-width:1200px;
+    margin:auto;
+}
 
-    <nav>
+/* ==========================================
+   COLORS
+========================================== */
 
-        <h2 class="logo">石畑</h2>
+:root{
 
-        <ul>
+    --bg:#090909;
+    --bg2:#101010;
 
-            <li><a href="#home">Accueil</a></li>
+    --cyan:#00e5ff;
+    --blue:#3b82f6;
+    --purple:#8b5cf6;
 
-            <li><a href="#about">About</a></li>
+    --white:#ffffff;
+    --gray:#bfbfbf;
 
-            <li><a href="#skills">Skills</a></li>
+    --glass:rgba(255,255,255,.05);
 
-            <li><a href="#projects">Projects</a></li>
+    --shadow:0 0 25px rgba(0,229,255,.25);
 
-            <li><a href="#contact">Contact</a></li>
+}
 
-        </ul>
+/* ==========================================
+   HEADER
+========================================== */
 
-    </nav>
+header{
 
-</header>
+    position:fixed;
 
-<section class="hero" id="home">
+    width:100%;
 
-    <div class="hero-text">
+    top:0;
 
-        <span class="jp">ようこそ</span>
+    left:0;
 
-        <h1>Ishak Anida</h1>
+    z-index:999;
 
-        <h3>IT Engineer • Cybersecurity • Data Analytics</h3>
+    background:rgba(10,10,10,.80);
 
-        <p>
+    backdrop-filter:blur(15px);
 
-            Passionné par Linux, le développement Web, la cybersécurité,
-            l'analyse de données et le design intérieur.
+    border-bottom:1px solid rgba(255,255,255,.05);
 
-        </p>
+}
 
-        <a href="#projects" class="btn">
-            Voir mes projets
-        </a>
+nav{
 
-    </div>
+    display:flex;
 
-</section>
+    justify-content:space-between;
 
-<section id="about">
+    align-items:center;
 
-    <h2>About Me</h2>
+    height:85px;
 
-    <p>
+}
 
-        Je suis ingénieur informatique basé au Maroc.
-        J'aime créer des applications modernes,
-        sécurisées et élégantes tout en explorant
-        les nouvelles technologies.
+.logo{
 
-    </p>
+    font-size:30px;
 
-</section>
+    font-weight:700;
 
-<section id="skills">
+    color:var(--cyan);
 
-    <h2>Skills</h2>
+    letter-spacing:4px;
 
-    <div class="cards">
+}
 
-        <div class="card">Linux</div>
+nav ul{
 
-        <div class="card">Git</div>
+    display:flex;
 
-        <div class="card">GitHub</div>
+    gap:40px;
 
-        <div class="card">HTML</div>
+}
 
-        <div class="card">CSS</div>
+nav ul li a{
 
-        <div class="card">JavaScript</div>
+    color:white;
 
-        <div class="card">Python</div>
+    font-size:15px;
 
-        <div class="card">Cybersecurity</div>
+    transition:.35s;
 
-        <div class="card">Data Analytics</div>
+}
 
-    </div>
+nav ul li a:hover{
 
-</section>
+    color:var(--cyan);
 
-<section id="projects">
+}
 
-    <h2>Projects</h2>
+/* ==========================================
+   HERO
+========================================== */
 
-    <div class="cards">
+.hero{
 
-        <div class="card">
+    min-height:100vh;
 
-            <h3>Portfolio</h3>
+    display:flex;
 
-            <p>Mon premier Portfolio publié sur GitHub Pages.</p>
+    align-items:center;
 
-        </div>
+}
 
-        <div class="card">
+.hero-content{
 
-            <h3>Interior Design</h3>
+    display:grid;
 
-            <p>Galerie de mes réalisations et projets.</p>
+    grid-template-columns:1fr 1fr;
 
-        </div>
+    align-items:center;
 
-        <div class="card">
+    gap:60px;
 
-            <h3>Future AI Projects</h3>
+}
 
-            <p>Docker • Linux • Python • AI Agents</p>
+.jp{
 
-        </div>
+    color:var(--cyan);
 
-    </div>
+    font-size:22px;
 
-</section>
+    letter-spacing:6px;
 
-<section id="contact">
+    margin-bottom:20px;
 
-    <h2>Contact</h2>
+}
 
-    <p>Email : your@email.com</p>
+.hero h1{
 
-    <p>GitHub : github.com/IssacCohen</p>
+    font-size:72px;
 
-</section>
+    line-height:1.1;
 
-<footer>
+    margin-bottom:20px;
 
-    <p>
+}
 
-        © 2026 Ishak Anida
+.hero h1 span{
 
-    </p>
+    color:var(--cyan);
 
-</footer>
+}
 
-<script src="script.js"></script>
+.hero h2{
 
-</body>
+    font-size:32px;
 
-</html>s
+    color:#d5d5d5;
+
+    margin-bottom:20px;
+
+}
+
+.hero p{
+
+    color:#bfbfbf;
+
+    line-height:1.8;
+
+    margin-bottom:35px;
+
+    font-size:18px;
+
+}
+
+/* ==========================================
+   BUTTONS
+========================================== */
+
+.hero-buttons{
+
+    display:flex;
+
+    gap:20px;
+
+}
+
+.btn{
+
+    background:var(--cyan);
+
+    color:black;
+
+    padding:16px 35px;
+
+    border-radius:50px;
+
+    font-weight:600;
+
+    transition:.35s;
+
+}
+
+.btn:hover{
+
+    transform:translateY(-5px);
+
+    box-shadow:var(--shadow);
+
+}
+
+.btn2{
+
+    border:2px solid var(--cyan);
+
+    color:var(--cyan);
+
+    padding:16px 35px;
+
+    border-radius:50px;
+
+    transition:.35s;
+
+}
+
+.btn2:hover{
+
+    background:var(--cyan);
+
+    color:black;
+
+}
+
+/* ==========================================
+   HERO IMAGE
+========================================== */
+
+.hero-image{
+
+    display:flex;
+
+    justify-content:center;
+
+}
+
+.circle{
+
+    width:420px;
+
+    height:420px;
+
+    border-radius:50%;
+
+    background:
+    radial-gradient(circle,var(--cyan),transparent 70%);
+
+    filter:blur(5px);
+
+    animation:float 5s ease-in-out infinite;
+
+}
+
+/* ==========================================
+   ANIMATION
+========================================== */
+
+@keyframes float{
+
+    0%{
+
+        transform:translateY(0);
+
+    }
+
+    50%{
+
+        transform:translateY(-20px);
+
+    }
+
+    100%{
+
+        transform:translateY(0);
+
+    }
+
+}
+/* ==========================================
+   SECTIONS
+========================================== */
+
+section{
+
+    padding:120px 0;
+
+}
+
+.section-title{
+
+    font-size:42px;
+
+    text-align:center;
+
+    color:var(--cyan);
+
+    margin-bottom:70px;
+
+    letter-spacing:2px;
+
+}
+
+/* ==========================================
+   ABOUT
+========================================== */
+
+#about p{
+
+    max-width:900px;
+
+    margin:auto;
+
+    text-align:center;
+
+    line-height:2;
+
+    color:var(--gray);
+
+    font-size:18px;
+
+}
+
+/* ==========================================
+   SKILLS
+========================================== */
+
+.skills{
+
+    display:grid;
+
+    grid-template-columns:repeat(auto-fit,minmax(170px,1fr));
+
+    gap:25px;
+
+    margin-top:60px;
+
+}
+
+.skills div{
+
+    background:var(--glass);
+
+    border:1px solid rgba(255,255,255,.08);
+
+    padding:30px;
+
+    border-radius:18px;
+
+    text-align:center;
+
+    transition:.35s;
+
+    backdrop-filter:blur(15px);
+
+    cursor:pointer;
+
+}
+
+.skills div:hover{
+
+    transform:translateY(-10px);
+
+    border-color:var(--cyan);
+
+    box-shadow:var(--shadow);
+
+}
+
+/* ==========================================
+   PROJECTS
+========================================== */
+
+.projects{
+
+    display:grid;
+
+    grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+
+    gap:35px;
+
+    margin-top:60px;
+
+}
+
+.card{
+
+    background:var(--glass);
+
+    border-radius:20px;
+
+    padding:35px;
+
+    border:1px solid rgba(255,255,255,.08);
+
+    transition:.35s;
+
+    backdrop-filter:blur(15px);
+
+}
+
+.card:hover{
+
+    transform:translateY(-10px);
+
+    border-color:var(--cyan);
+
+    box-shadow:var(--shadow);
+
+}
+
+.card h3{
+
+    color:var(--cyan);
+
+    margin-bottom:18px;
+
+    font-size:25px;
+
+}
+
+.card p{
+
+    color:var(--gray);
+
+    line-height:1.8;
+
+}
+
+/* ==========================================
+   CONTACT
+========================================== */
+
+#contact{
+
+    text-align:center;
+
+}
+
+#contact p{
+
+    color:var(--gray);
+
+    font-size:18px;
+
+    margin-bottom:20px;
+
+}
+
+.contact-box{
+
+    margin-top:40px;
+
+    display:flex;
+
+    justify-content:center;
+
+    gap:25px;
+
+    flex-wrap:wrap;
+
+}
+
+.contact-box a{
+
+    padding:16px 28px;
+
+    border:2px solid var(--cyan);
+
+    border-radius:50px;
+
+    transition:.35s;
+
+}
+
+.contact-box a:hover{
+
+    background:var(--cyan);
+
+    color:#000;
+
+}
+
+/* ==========================================
+   FOOTER
+========================================== */
+
+footer{
+
+    padding:35px;
+
+    text-align:center;
+
+    color:#9f9f9f;
+
+    border-top:1px solid rgba(255,255,255,.08);
+
+    margin-top:100px;
+
+}
+/* ==========================================
+   JAPANESE CYBER EFFECTS
+========================================== */
+
+body::before{
+
+    content:"";
+
+    position:fixed;
+
+    width:600px;
+
+    height:600px;
+
+    top:-250px;
+
+    left:-200px;
+
+    background:radial-gradient(circle,var(--cyan),transparent 70%);
+
+    opacity:.08;
+
+    filter:blur(90px);
+
+    z-index:-2;
+
+}
+
+body::after{
+
+    content:"";
+
+    position:fixed;
+
+    width:700px;
+
+    height:700px;
+
+    bottom:-300px;
+
+    right:-250px;
+
+    background:radial-gradient(circle,var(--purple),transparent 70%);
+
+    opacity:.08;
+
+    filter:blur(120px);
+
+    z-index:-2;
+
+}
+
+/* ==========================================
+   SCROLLBAR
+========================================== */
+
+::-webkit-scrollbar{
+
+    width:10px;
+
+}
+
+::-webkit-scrollbar-track{
+
+    background:#090909;
+
+}
+
+::-webkit-scrollbar-thumb{
+
+    background:var(--cyan);
+
+    border-radius:20px;
+
+}
+
+::-webkit-scrollbar-thumb:hover{
+
+    background:#00ffff;
+
+}
+
+/* ==========================================
+   TEXT SELECTION
+========================================== */
+
+::selection{
+
+    background:var(--cyan);
+
+    color:black;
+
+}
+
+/* ==========================================
+   HOVER EFFECT
+========================================== */
+
+.card:hover,
+.skills div:hover,
+.btn:hover,
+.btn2:hover{
+
+    transition:.35s;
+
+}
+
+/* ==========================================
+   FADE ANIMATION
+========================================== */
+
+.fade{
+
+    animation:fade .8s ease;
+
+}
+
+@keyframes fade{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(35px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+
+    }
+
+}
+
+/* ==========================================
+   SAKURA BACKGROUND
+========================================== */
+
+.sakura{
+
+    position:fixed;
+
+    top:-10%;
+
+    width:18px;
+
+    height:18px;
+
+    background:#ff9ecf;
+
+    border-radius:50% 0 50% 50%;
+
+    transform:rotate(45deg);
+
+    opacity:.55;
+
+    animation:fall linear infinite;
+
+    z-index:-1;
+
+}
+
+@keyframes fall{
+
+    0%{
+
+        transform:translateY(-100px) rotate(0deg);
+
+    }
+
+    100%{
+
+        transform:translateY(120vh) rotate(360deg);
+
+    }
+
+}
+
+/* ==========================================
+   RESPONSIVE
+========================================== */
+
+@media(max-width:992px){
+
+.hero-content{
+
+grid-template-columns:1fr;
+
+text-align:center;
+
+}
+
+.hero-image{
+
+margin-top:40px;
+
+}
+
+nav{
+
+flex-direction:column;
+
+height:auto;
+
+padding:20px 0;
+
+}
+
+nav ul{
+
+margin-top:20px;
+
+gap:20px;
+
+flex-wrap:wrap;
+
+justify-content:center;
+
+}
+
+.hero h1{
+
+font-size:55px;
+
+}
+
+.hero h2{
+
+font-size:28px;
+
+}
+
+.circle{
+
+width:320px;
+
+height:320px;
+
+}
+
+}
+
+@media(max-width:768px){
+
+section{
+
+padding:90px 0;
+
+}
+
+.section-title{
+
+font-size:34px;
+
+}
+
+.hero h1{
+
+font-size:42px;
+
+}
+
+.hero h2{
+
+font-size:24px;
+
+}
+
+.hero-buttons{
+
+flex-direction:column;
+
+align-items:center;
+
+}
+
+.btn,
+.btn2{
+
+width:220px;
+
+text-align:center;
+
+}
+
+.circle{
+
+width:250px;
+
+height:250px;
+
+}
+
+.skills{
+
+grid-template-columns:1fr 1fr;
+
+}
+
+.projects{
+
+grid-template-columns:1fr;
+
+}
+
+}
+
+@media(max-width:480px){
+
+.logo{
+
+font-size:24px;
+
+}
+
+.hero h1{
+
+font-size:34px;
+
+}
+
+.hero h2{
+
+font-size:20px;
+
+}
+
+.hero p{
+
+font-size:16px;
+
+}
+
+.skills{
+
+grid-template-columns:1fr;
+
+}
+
+nav ul{
+
+gap:15px;
+
+}
+
+footer{
+
+font-size:14px;
+
+}
+
+}

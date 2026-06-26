@@ -1,170 +1,169 @@
-<!DOCTYPE html>
-<html lang="fr">
+/* ==========================================
+   Portfolio Script
+========================================== */
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+console.log("Portfolio Loaded");
 
-    <title>Ishak Anida | Portfolio</title>
+/* ==========================================
+   Smooth Navigation
+========================================== */
 
-    <link rel="stylesheet" href="style.css">
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    anchor.addEventListener("click", function(e){
 
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Noto+Sans+JP:wght@300;400;700&display=swap" rel="stylesheet">
-</head>
+        e.preventDefault();
 
-<body>
+        const target = document.querySelector(this.getAttribute("href"));
 
-<header>
+        if(target){
 
-    <nav>
+            target.scrollIntoView({
 
-        <h2 class="logo">石畑</h2>
+                behavior:"smooth"
 
-        <ul>
+            });
 
-            <li><a href="#home">Accueil</a></li>
+        }
 
-            <li><a href="#about">About</a></li>
+    });
 
-            <li><a href="#skills">Skills</a></li>
+});
 
-            <li><a href="#projects">Projects</a></li>
+/* ==========================================
+   Reveal Animation
+========================================== */
 
-            <li><a href="#contact">Contact</a></li>
+const observer = new IntersectionObserver((entries)=>{
 
-        </ul>
+    entries.forEach(entry=>{
 
-    </nav>
+        if(entry.isIntersecting){
 
-</header>
+            entry.target.classList.add("fade");
 
-<section class="hero" id="home">
+        }
 
-    <div class="hero-text">
+    });
 
-        <span class="jp">ようこそ</span>
+},{
+    threshold:0.15
+});
 
-        <h1>Ishak Anida</h1>
+document.querySelectorAll("section").forEach(section=>{
 
-        <h3>IT Engineer • Cybersecurity • Data Analytics</h3>
+    observer.observe(section);
 
-        <p>
+});
 
-            Passionné par Linux, le développement Web, la cybersécurité,
-            l'analyse de données et le design intérieur.
+/* ==========================================
+   Sakura Animation
+========================================== */
 
-        </p>
+function createSakura(){
 
-        <a href="#projects" class="btn">
-            Voir mes projets
-        </a>
+    const petal=document.createElement("div");
 
-    </div>
+    petal.classList.add("sakura");
 
-</section>
+    petal.style.left=Math.random()*100+"vw";
 
-<section id="about">
+    petal.style.animationDuration=
+        (Math.random()*5+6)+"s";
 
-    <h2>About Me</h2>
+    petal.style.opacity=Math.random();
 
-    <p>
+    petal.style.transform=
+        "scale("+(Math.random()+0.3)+")";
 
-        Je suis ingénieur informatique basé au Maroc.
-        J'aime créer des applications modernes,
-        sécurisées et élégantes tout en explorant
-        les nouvelles technologies.
+    document.body.appendChild(petal);
 
-    </p>
+    setTimeout(()=>{
 
-</section>
+        petal.remove();
 
-<section id="skills">
+    },12000);
 
-    <h2>Skills</h2>
+}
 
-    <div class="cards">
+setInterval(createSakura,450);
 
-        <div class="card">Linux</div>
+/* ==========================================
+   Active Menu
+========================================== */
 
-        <div class="card">Git</div>
+const sections=document.querySelectorAll("section");
 
-        <div class="card">GitHub</div>
+const navLinks=document.querySelectorAll("nav a");
 
-        <div class="card">HTML</div>
+window.addEventListener("scroll",()=>{
 
-        <div class="card">CSS</div>
+    let current="";
 
-        <div class="card">JavaScript</div>
+    sections.forEach(section=>{
 
-        <div class="card">Python</div>
+        const sectionTop=section.offsetTop-150;
 
-        <div class="card">Cybersecurity</div>
+        if(scrollY>=sectionTop){
 
-        <div class="card">Data Analytics</div>
+            current=section.getAttribute("id");
 
-    </div>
+        }
 
-</section>
+    });
 
-<section id="projects">
+    navLinks.forEach(link=>{
 
-    <h2>Projects</h2>
+        link.classList.remove("active");
 
-    <div class="cards">
+        if(link.getAttribute("href")==="#"+current){
 
-        <div class="card">
+            link.classList.add("active");
 
-            <h3>Portfolio</h3>
+        }
 
-            <p>Mon premier Portfolio publié sur GitHub Pages.</p>
+    });
 
-        </div>
+});
 
-        <div class="card">
+/* ==========================================
+   Hero Glow
+========================================== */
 
-            <h3>Interior Design</h3>
+const circle=document.querySelector(".circle");
 
-            <p>Galerie de mes réalisations et projets.</p>
+window.addEventListener("mousemove",(e)=>{
 
-        </div>
+    if(circle){
 
-        <div class="card">
+        circle.style.transform=
 
-            <h3>Future AI Projects</h3>
+        "translate("+
 
-            <p>Docker • Linux • Python • AI Agents</p>
+        (e.clientX/90)+"px,"+
 
-        </div>
+        (e.clientY/90)+"px)";
 
-    </div>
+    }
 
-</section>
+});
 
-<section id="contact">
+/* ==========================================
+   Footer Year
+========================================== */
 
-    <h2>Contact</h2>
+const footer=document.querySelector("footer p");
 
-    <p>Email : your@email.com</p>
+if(footer){
 
-    <p>GitHub : github.com/IssacCohen</p>
+    footer.innerHTML=
+    "© "+new Date().getFullYear()+
+    " Anas Anida • Japanese Cyber Portfolio";
 
-</section>
+}
 
-<footer>
+/* ==========================================
+   Console Message
+========================================== */
 
-    <p>
-
-        © 2026 Ishak Anida
-
-    </p>
-
-</footer>
-
-<script src="script.js"></script>
-
-</body>
-
-</html>ssss
+console.log("Welcome Anas Anida 🚀");
