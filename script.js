@@ -1,169 +1,85 @@
-/* ==========================================
-   Portfolio Script
-========================================== */
+console.log("Anasse Anida V1.1 Loaded");
 
-console.log("Portfolio Loaded");
-
-/* ==========================================
-   Smooth Navigation
-========================================== */
-
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-
-    anchor.addEventListener("click", function(e){
-
-        e.preventDefault();
-
-        const target = document.querySelector(this.getAttribute("href"));
-
-        if(target){
-
-            target.scrollIntoView({
-
-                behavior:"smooth"
-
-            });
-
-        }
-
-    });
-
+// Loader
+window.addEventListener("load", () => {
+  setTimeout(() => {
+    document.getElementById("loader").classList.add("hide");
+  }, 900);
 });
 
-/* ==========================================
-   Reveal Animation
-========================================== */
-
-const observer = new IntersectionObserver((entries)=>{
-
-    entries.forEach(entry=>{
-
-        if(entry.isIntersecting){
-
-            entry.target.classList.add("fade");
-
-        }
-
-    });
-
-},{
-    threshold:0.15
-});
-
-document.querySelectorAll("section").forEach(section=>{
-
-    observer.observe(section);
-
-});
-
-/* ==========================================
-   Sakura Animation
-========================================== */
-
-function createSakura(){
-
-    const petal=document.createElement("div");
-
-    petal.classList.add("sakura");
-
-    petal.style.left=Math.random()*100+"vw";
-
-    petal.style.animationDuration=
-        (Math.random()*5+6)+"s";
-
-    petal.style.opacity=Math.random();
-
-    petal.style.transform=
-        "scale("+(Math.random()+0.3)+")";
-
-    document.body.appendChild(petal);
-
-    setTimeout(()=>{
-
-        petal.remove();
-
-    },12000);
-
-}
-
-setInterval(createSakura,450);
-
-/* ==========================================
-   Active Menu
-========================================== */
-
-const sections=document.querySelectorAll("section");
-
-const navLinks=document.querySelectorAll("nav a");
-
-window.addEventListener("scroll",()=>{
-
-    let current="";
-
-    sections.forEach(section=>{
-
-        const sectionTop=section.offsetTop-150;
-
-        if(scrollY>=sectionTop){
-
-            current=section.getAttribute("id");
-
-        }
-
-    });
-
-    navLinks.forEach(link=>{
-
-        link.classList.remove("active");
-
-        if(link.getAttribute("href")==="#"+current){
-
-            link.classList.add("active");
-
-        }
-
-    });
-
-});
-
-/* ==========================================
-   Hero Glow
-========================================== */
-
-const circle=document.querySelector(".circle");
-
-window.addEventListener("mousemove",(e)=>{
-
-    if(circle){
-
-        circle.style.transform=
-
-        "translate("+
-
-        (e.clientX/90)+"px,"+
-
-        (e.clientY/90)+"px)";
-
+// Reveal animation
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((entry) => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add("fade");
     }
-
+  });
+}, {
+  threshold: 0.18
 });
 
-/* ==========================================
-   Footer Year
-========================================== */
+document.querySelectorAll(".reveal").forEach((element) => {
+  observer.observe(element);
+});
 
-const footer=document.querySelector("footer p");
+// Active nav
+const sections = document.querySelectorAll(".section");
+const links = document.querySelectorAll("nav a");
 
-if(footer){
+window.addEventListener("scroll", () => {
+  let current = "";
 
-    footer.innerHTML=
-    "© "+new Date().getFullYear()+
-    " Anas Anida • Japanese Cyber Portfolio";
+  sections.forEach((section) => {
+    const sectionTop = section.offsetTop - 180;
 
+    if (window.scrollY >= sectionTop) {
+      current = section.getAttribute("id");
+    }
+  });
+
+  links.forEach((link) => {
+    link.classList.remove("active");
+
+    if (link.getAttribute("href") === `#${current}`) {
+      link.classList.add("active");
+    }
+  });
+});
+
+// Rain
+const rainContainer = document.querySelector(".rain");
+
+for (let i = 0; i < 55; i++) {
+  const drop = document.createElement("span");
+  drop.className = "drop";
+  drop.style.left = `${Math.random() * 100}%`;
+  drop.style.animationDuration = `${0.6 + Math.random() * 0.8}s`;
+  drop.style.animationDelay = `${Math.random() * 4}s`;
+  drop.style.opacity = `${0.15 + Math.random() * 0.35}`;
+  rainContainer.appendChild(drop);
 }
 
-/* ==========================================
-   Console Message
-========================================== */
+// Sakura
+const sakuraContainer = document.querySelector(".sakura");
 
-console.log("Welcome Anas Anida 🚀");
+for (let i = 0; i < 28; i++) {
+  const petal = document.createElement("span");
+  petal.className = "petal";
+  petal.style.left = `${Math.random() * 100}%`;
+  petal.style.animationDuration = `${7 + Math.random() * 9}s`;
+  petal.style.animationDelay = `${Math.random() * 8}s`;
+  petal.style.opacity = `${0.35 + Math.random() * 0.55}`;
+  sakuraContainer.appendChild(petal);
+}
+
+// Parallax hero image
+const heroImage = document.querySelector(".hero-visual img");
+const moon = document.querySelector(".moon");
+
+window.addEventListener("mousemove", (event) => {
+  const x = (event.clientX / window.innerWidth - 0.5) * 18;
+  const y = (event.clientY / window.innerHeight - 0.5) * 18;
+
+  heroImage.style.transform = `translate(${x}px, ${y}px)`;
+  moon.style.transform = `translate(${-x}px, ${-y}px)`;
+});
