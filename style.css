@@ -158,26 +158,50 @@ nav a.active {
   align-items: center;
 }
 
-.hero-visual img {
-  width: min(100%, 650px);
-  position: relative;
-  z-index: 3;
-  filter: drop-shadow(0 0 40px rgba(255, 79, 135, 0.25));
-  animation: floatAnime 5s ease-in-out infinite;
+.hero-visual img{
+    width:min(100%,760px);
+    max-height:850px;
+    object-fit:contain;
+
+    position:relative;
+    z-index:3;
+
+    filter:
+        drop-shadow(0 0 30px rgba(255,79,135,.45))
+        drop-shadow(0 0 80px rgba(255,79,135,.25));
+
+    animation:floatAnime 6s ease-in-out infinite;
+    transition:0.4s;
 }
 
-.moon {
-  position: absolute;
-  width: 420px;
-  height: 420px;
-  border-radius: 50%;
-  background:
-    radial-gradient(circle at 45% 40%, #ff5c9d, #8d1e50 55%, #220714 75%);
-  box-shadow:
-    0 0 80px rgba(255, 79, 135, 0.45),
-    inset 0 0 50px rgba(0, 0, 0, 0.35);
-  z-index: 1;
-  animation: moonPulse 4s ease-in-out infinite;
+.hero-visual img:hover{
+    transform:scale(1.04) rotate(-1deg);
+    filter:
+        drop-shadow(0 0 60px rgba(255,79,135,.7))
+        drop-shadow(0 0 120px rgba(255,79,135,.45));
+}
+
+.moon{
+    position:absolute;
+
+    width:550px;
+    height:550px;
+
+    border-radius:50%;
+
+    background:
+    radial-gradient(circle at 45% 40%,
+    #ff74b5,
+    #d74288 45%,
+    #8a1e52 100%);
+
+    opacity:.35;
+
+    filter:blur(2px);
+
+    z-index:1;
+
+    animation:moonFloat 8s ease-in-out infinite;
 }
 
 .split {
@@ -343,4 +367,15 @@ footer {
   .cards {
     grid-template-columns: 1fr;
   }
+}
+@keyframes moonFloat{
+
+    0%,100%{
+        transform:translateY(0);
+    }
+
+    50%{
+        transform:translateY(-18px);
+    }
+
 }
