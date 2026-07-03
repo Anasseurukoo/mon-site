@@ -6,15 +6,20 @@
   <title>Anasse Anida | IT Engineer & AI Builder</title>
   <link rel="stylesheet" href="style.css" />
 </head>
+
 <body>
+
+  <div class="cursor-glow"></div>
 
   <div class="loader" id="loader">
     <h1>ANASSE ANIDA</h1>
     <p>Entering the Digital Dojo...</p>
+    <div class="loading-bar"><span></span></div>
   </div>
 
   <div class="rain"></div>
   <div class="sakura"></div>
+  <div class="stars"></div>
 
   <header class="navbar">
     <div class="logo">ANIDA</div>
@@ -22,6 +27,7 @@
       <a href="#home">Accueil</a>
       <a href="#about">À propos</a>
       <a href="#projects">Projets</a>
+      <a href="#timeline">Timeline</a>
       <a href="#lab">AI Lab</a>
       <a href="#contact">Contact</a>
     </nav>
@@ -41,11 +47,12 @@
 
         <div class="buttons">
           <a href="#projects" class="btn primary">Voir mes projets</a>
-          <a href="#contact" class="btn ghost">Me contacter</a>
+          <a href="https://github.com/IssacCohen" target="_blank" class="btn ghost">GitHub</a>
         </div>
       </div>
 
       <div class="hero-visual reveal">
+        <div class="moon"></div>
         <img src="image/hero-anime.jpg" alt="Tengen Uzui">
       </div>
     </section>
@@ -56,9 +63,9 @@
         <h2>À propos</h2>
       </div>
       <p>
-        Je suis Anasse Anida. Passionné par l’IT, Linux, Docker, GitHub,
+        Je suis Anasse Anida, passionné par l’IT, Linux, Docker, GitHub,
         l’intelligence artificielle et le design intérieur. Je reconstruis mon parcours
-        avec une vision claire : créer des systèmes utiles, beaux et intelligents.
+        avec une vision claire : créer des systèmes utiles, beaux, rapides et intelligents.
       </p>
     </section>
 
@@ -87,24 +94,43 @@
       </div>
     </section>
 
+    <section id="timeline" class="section reveal">
+      <p class="section-kicker">03 — Roadmap</p>
+      <h2>My Path</h2>
+
+      <div class="timeline">
+        <div class="timeline-item"><strong>2023</strong><span>Restart & Rebuild</span></div>
+        <div class="timeline-item"><strong>Linux</strong><span>Terminal, Git, SSH</span></div>
+        <div class="timeline-item"><strong>Docker</strong><span>Containers & AI Apps</span></div>
+        <div class="timeline-item"><strong>AI</strong><span>Ollama, Llama, Odysseus</span></div>
+        <div class="timeline-item"><strong>Future</strong><span>Agent AI Builder</span></div>
+      </div>
+    </section>
+
     <section id="lab" class="section split reveal">
       <div>
-        <p class="section-kicker">03 — AI Laboratory</p>
+        <p class="section-kicker">04 — AI Laboratory</p>
         <h2>AI Lab</h2>
       </div>
-      <p>
-        Mon environnement personnel pour tester, apprendre et construire :
-        Docker, WSL, Ollama, Llama, OpenAI API, GitHub, MCP Tools et automatisation.
-      </p>
+
+      <div class="terminal-box">
+        <p>> Starting AI Engine...</p>
+        <p>> Loading Docker...</p>
+        <p>> Loading Ollama...</p>
+        <p>> Loading Llama 3.2...</p>
+        <p class="online">> SYSTEM ONLINE</p>
+      </div>
     </section>
 
     <section id="contact" class="section contact reveal">
-      <p class="section-kicker">04 — Final Scene</p>
+      <p class="section-kicker">05 — Final Scene</p>
       <h2>Contact</h2>
       <p>Disponible pour projets IT, web, AI et design intérieur.</p>
       <a class="btn primary" href="mailto:anidayacoub@outlook.com">
         anidayacoub@outlook.com
       </a>
+      <p class="japanese">一期一会</p>
+      <small>Every project is a unique encounter.</small>
     </section>
 
   </main>

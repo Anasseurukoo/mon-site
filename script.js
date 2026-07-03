@@ -1,10 +1,18 @@
-console.log("Anasse Anida V1.1 Loaded");
+console.log("Anasse Anida Final V2 Loaded");
 
 // Loader
 window.addEventListener("load", () => {
   setTimeout(() => {
     document.getElementById("loader").classList.add("hide");
   }, 900);
+});
+
+// Cursor glow
+const cursorGlow = document.querySelector(".cursor-glow");
+
+document.addEventListener("mousemove", (e) => {
+  cursorGlow.style.left = `${e.clientX}px`;
+  cursorGlow.style.top = `${e.clientY}px`;
 });
 
 // Reveal animation
@@ -46,7 +54,7 @@ window.addEventListener("scroll", () => {
   });
 });
 
-// Rain
+// Rain effect
 const rainContainer = document.querySelector(".rain");
 
 for (let i = 0; i < 55; i++) {
@@ -59,10 +67,10 @@ for (let i = 0; i < 55; i++) {
   rainContainer.appendChild(drop);
 }
 
-// Sakura
+// Sakura effect
 const sakuraContainer = document.querySelector(".sakura");
 
-for (let i = 0; i < 28; i++) {
+for (let i = 0; i < 32; i++) {
   const petal = document.createElement("span");
   petal.className = "petal";
   petal.style.left = `${Math.random() * 100}%`;
@@ -72,14 +80,28 @@ for (let i = 0; i < 28; i++) {
   sakuraContainer.appendChild(petal);
 }
 
-// Parallax hero image
+// Stars effect
+const starsContainer = document.querySelector(".stars");
+
+for (let i = 0; i < 70; i++) {
+  const star = document.createElement("span");
+  star.className = "star";
+  star.style.left = `${Math.random() * 100}%`;
+  star.style.top = `${Math.random() * 100}%`;
+  star.style.animationDelay = `${Math.random() * 4}s`;
+  starsContainer.appendChild(star);
+}
+
+// Mouse parallax
 const heroImage = document.querySelector(".hero-visual img");
 const moon = document.querySelector(".moon");
 
-window.addEventListener("mousemove", (event) => {
-  const x = (event.clientX / window.innerWidth - 0.5) * 18;
-  const y = (event.clientY / window.innerHeight - 0.5) * 18;
+document.addEventListener("mousemove", (event) => {
+  if (!heroImage || !moon) return;
 
-  heroImage.style.transform = `translate(${x}px, ${y}px)`;
+  const x = (event.clientX / window.innerWidth - 0.5) * 24;
+  const y = (event.clientY / window.innerHeight - 0.5) * 24;
+
+  heroImage.style.transform = `translate(${x}px, ${y}px) scale(1.03)`;
   moon.style.transform = `translate(${-x}px, ${-y}px)`;
 });
