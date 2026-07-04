@@ -212,21 +212,35 @@ nav a.active {
   position: relative;
   z-index: 4;
 
-  /* كيذوب الخلفية السوداء ديال الصورة مع الموقع */
   mix-blend-mode: screen;
+
+  -webkit-mask-image: radial-gradient(
+    ellipse at center,
+    black 42%,
+    rgba(0, 0, 0, 0.85) 56%,
+    transparent 78%
+  );
+
+  mask-image: radial-gradient(
+    ellipse at center,
+    black 42%,
+    rgba(0, 0, 0, 0.85) 56%,
+    transparent 78%
+  );
 
   filter:
     drop-shadow(0 0 35px rgba(255, 79, 135, 0.50))
     drop-shadow(0 0 90px rgba(255, 79, 135, 0.28));
 
   animation: floatAnime 6s ease-in-out infinite;
-  transition: 0.4s ease;
+  transition: 0.45s ease;
   will-change: transform;
   cursor: pointer;
 }
 
 .hero-visual img:hover {
   transform: scale(1.05) rotate(-1deg);
+
   filter:
     drop-shadow(0 0 70px rgba(255, 79, 135, 0.85))
     drop-shadow(0 0 140px rgba(255, 79, 135, 0.55));
