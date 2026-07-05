@@ -11,7 +11,8 @@ html {
 body {
   font-family: Arial, Helvetica, sans-serif;
   background:
-    radial-gradient(circle at 75% 15%, rgba(255, 79, 135, 0.16), transparent 35%),
+    radial-gradient(circle at 70% 20%, rgba(255, 79, 135, 0.16), transparent 35%),
+    radial-gradient(circle at 20% 80%, rgba(255, 79, 135, 0.08), transparent 30%),
     linear-gradient(180deg, #050509, #09030a, #050509);
   color: #fff;
   overflow-x: hidden;
@@ -46,6 +47,7 @@ body {
 .loader h1 {
   color: #ff4f87;
   letter-spacing: 8px;
+  font-size: 38px;
   text-shadow: 0 0 30px rgba(255, 79, 135, 0.9);
 }
 
@@ -113,7 +115,7 @@ nav a.active {
   text-shadow: 0 0 18px rgba(255, 79, 135, 0.9);
 }
 
-/* Global Sections */
+/* General Sections */
 .section {
   min-height: 100vh;
   padding: 130px 8%;
@@ -138,7 +140,7 @@ nav a.active {
 }
 
 .hero h1 {
-  font-size: clamp(58px, 9vw, 120px);
+  font-size: clamp(58px, 9vw, 118px);
   line-height: 0.9;
   text-shadow: 0 0 35px rgba(255, 255, 255, 0.35);
 }
@@ -183,7 +185,7 @@ nav a.active {
   box-shadow: 0 0 45px rgba(255, 79, 135, 0.7);
 }
 
-/* Cinematic Hero Visual */
+/* Hero Visual */
 .hero-visual {
   position: relative;
   min-height: 620px;
@@ -211,22 +213,6 @@ nav a.active {
   object-fit: contain;
   position: relative;
   z-index: 4;
-
-  mix-blend-mode: screen;
-
-  -webkit-mask-image: radial-gradient(
-    ellipse at center,
-    black 42%,
-    rgba(0, 0, 0, 0.85) 56%,
-    transparent 78%
-  );
-
-  mask-image: radial-gradient(
-    ellipse at center,
-    black 42%,
-    rgba(0, 0, 0, 0.85) 56%,
-    transparent 78%
-  );
 
   filter:
     drop-shadow(0 0 35px rgba(255, 79, 135, 0.50))
@@ -408,7 +394,7 @@ footer {
   transform: translateY(0);
 }
 
-/* Effects Layers */
+/* Background Effects */
 .rain,
 .sakura,
 .stars {

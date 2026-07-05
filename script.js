@@ -1,22 +1,28 @@
-console.log("Anasse Anida Final V2 Loaded");
+console.log("Anasse Anida Final Anime Portfolio Loaded");
 
 // Loader
 window.addEventListener("load", () => {
   setTimeout(() => {
-    document.getElementById("loader").classList.add("hide");
+    const loader = document.getElementById("loader");
+
+    if (loader) {
+      loader.classList.add("hide");
+    }
   }, 900);
 });
 
-// Cursor glow
+// Cursor Glow
 const cursorGlow = document.querySelector(".cursor-glow");
 
-document.addEventListener("mousemove", (e) => {
-  cursorGlow.style.left = `${e.clientX}px`;
-  cursorGlow.style.top = `${e.clientY}px`;
+document.addEventListener("mousemove", (event) => {
+  if (!cursorGlow) return;
+
+  cursorGlow.style.left = `${event.clientX}px`;
+  cursorGlow.style.top = `${event.clientY}px`;
 });
 
-// Reveal animation
-const observer = new IntersectionObserver((entries) => {
+// Reveal Animation
+const revealObserver = new IntersectionObserver((entries) => {
   entries.forEach((entry) => {
     if (entry.isIntersecting) {
       entry.target.classList.add("fade");
@@ -27,12 +33,12 @@ const observer = new IntersectionObserver((entries) => {
 });
 
 document.querySelectorAll(".reveal").forEach((element) => {
-  observer.observe(element);
+  revealObserver.observe(element);
 });
 
-// Active nav
+// Active Nav
 const sections = document.querySelectorAll(".section");
-const links = document.querySelectorAll("nav a");
+const navLinks = document.querySelectorAll("nav a");
 
 window.addEventListener("scroll", () => {
   let current = "";
@@ -45,7 +51,7 @@ window.addEventListener("scroll", () => {
     }
   });
 
-  links.forEach((link) => {
+  navLinks.forEach((link) => {
     link.classList.remove("active");
 
     if (link.getAttribute("href") === `#${current}`) {
@@ -54,45 +60,57 @@ window.addEventListener("scroll", () => {
   });
 });
 
-// Rain effect
+// Rain Effect
 const rainContainer = document.querySelector(".rain");
 
-for (let i = 0; i < 55; i++) {
-  const drop = document.createElement("span");
-  drop.className = "drop";
-  drop.style.left = `${Math.random() * 100}%`;
-  drop.style.animationDuration = `${0.6 + Math.random() * 0.8}s`;
-  drop.style.animationDelay = `${Math.random() * 4}s`;
-  drop.style.opacity = `${0.15 + Math.random() * 0.35}`;
-  rainContainer.appendChild(drop);
+if (rainContainer) {
+  for (let i = 0; i < 55; i++) {
+    const drop = document.createElement("span");
+
+    drop.className = "drop";
+    drop.style.left = `${Math.random() * 100}%`;
+    drop.style.animationDuration = `${0.6 + Math.random() * 0.8}s`;
+    drop.style.animationDelay = `${Math.random() * 4}s`;
+    drop.style.opacity = `${0.15 + Math.random() * 0.35}`;
+
+    rainContainer.appendChild(drop);
+  }
 }
 
-// Sakura effect
+// Sakura Effect
 const sakuraContainer = document.querySelector(".sakura");
 
-for (let i = 0; i < 32; i++) {
-  const petal = document.createElement("span");
-  petal.className = "petal";
-  petal.style.left = `${Math.random() * 100}%`;
-  petal.style.animationDuration = `${7 + Math.random() * 9}s`;
-  petal.style.animationDelay = `${Math.random() * 8}s`;
-  petal.style.opacity = `${0.35 + Math.random() * 0.55}`;
-  sakuraContainer.appendChild(petal);
+if (sakuraContainer) {
+  for (let i = 0; i < 32; i++) {
+    const petal = document.createElement("span");
+
+    petal.className = "petal";
+    petal.style.left = `${Math.random() * 100}%`;
+    petal.style.animationDuration = `${7 + Math.random() * 9}s`;
+    petal.style.animationDelay = `${Math.random() * 8}s`;
+    petal.style.opacity = `${0.35 + Math.random() * 0.55}`;
+
+    sakuraContainer.appendChild(petal);
+  }
 }
 
-// Stars effect
+// Stars Effect
 const starsContainer = document.querySelector(".stars");
 
-for (let i = 0; i < 70; i++) {
-  const star = document.createElement("span");
-  star.className = "star";
-  star.style.left = `${Math.random() * 100}%`;
-  star.style.top = `${Math.random() * 100}%`;
-  star.style.animationDelay = `${Math.random() * 4}s`;
-  starsContainer.appendChild(star);
+if (starsContainer) {
+  for (let i = 0; i < 70; i++) {
+    const star = document.createElement("span");
+
+    star.className = "star";
+    star.style.left = `${Math.random() * 100}%`;
+    star.style.top = `${Math.random() * 100}%`;
+    star.style.animationDelay = `${Math.random() * 4}s`;
+
+    starsContainer.appendChild(star);
+  }
 }
 
-// Mouse parallax
+// Mouse Parallax
 const heroImage = document.querySelector(".hero-visual img");
 const moon = document.querySelector(".moon");
 
