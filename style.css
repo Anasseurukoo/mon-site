@@ -1,4 +1,4 @@
-﻿@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap');
 
     :root {
       --bg: #030307;
@@ -24,7 +24,7 @@
 
       /* V5 images: replace files in /image/ with your own photos/screenshots */
       --img-dojo: url("image/dojo-bg.png");
-      --img-profile: url("image/dojo-bg.png"); /* replace later with profile-photo.png */
+      --img-profile: url("image/profile-photo.png");
       --img-projects-banner: url("image/projects-banner.png");
       --img-timeline-banner: url("image/timeline-banner.png");
       --img-lab-banner: url("image/lab-banner.png");
@@ -721,7 +721,7 @@
     .stack-main { padding: 30px; }
     .stack-main h4 { margin-bottom: 12px; color: #eadcff; text-transform: uppercase; font-size: 13px; letter-spacing: 1px; }
     .stack-main ul { list-style: none; display: grid; gap: 10px; color: #d8d0e6; font-size: 13px; }
-    .stack-main li::before { content: "▣"; color: #a643ff; margin-right: 9px; }
+    .stack-main li::before { content: "?"; color: #a643ff; margin-right: 9px; }
 
     .project-grid {
       display: grid;
@@ -810,7 +810,7 @@
     .side-box { padding: 20px; }
     .side-box h3 { text-transform: uppercase; font-size: 14px; letter-spacing: 1px; margin-bottom: 13px; color: #eadcff; }
     .side-box ul { list-style: none; display: grid; gap: 10px; color: var(--muted); font-size: 13px; }
-    .side-box li::before { content:"✓"; color: var(--purple2); margin-right: 8px; }
+    .side-box li::before { content:"?"; color: var(--purple2); margin-right: 8px; }
     .quote { display: grid; grid-template-columns: 70px 1fr; align-items: center; gap: 16px; }
     .quote .kanji { font-size: 66px; color: var(--purple2); text-shadow: 0 0 18px var(--purple2); font-family: Cinzel, serif; }
     .quote p { color: #ddd4e9; line-height: 1.55; }
@@ -922,7 +922,7 @@
       transition: .28s ease;
     }
     .note-card::after {
-      content:"侍"; position:absolute; right: 18px; bottom: -14px;
+      content:"?"; position:absolute; right: 18px; bottom: -14px;
       color: rgba(157,60,255,.07);
       font-family: Cinzel, serif; font-size: 100px;
     }
