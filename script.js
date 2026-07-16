@@ -1,7 +1,5 @@
 let introScreen = document.getElementById("introScreen");
 let introSkip = document.getElementById("introSkip");
-let introVideo = document.getElementById("introVideo");
-
 const replayIntro = document.getElementById("replayIntro");
 const menuButton = document.getElementById("menuButton");
 const nav = document.getElementById("nav");
@@ -9,70 +7,39 @@ const siteHeader = document.getElementById("siteHeader");
 const petals = document.getElementById("petals");
 const year = document.getElementById("year");
 
-let introExitTimer;
-let introEndTimer;
+let introTimer;
 
-const INTRO_EXIT_AT = 5200;
-const INTRO_END_AT = 6000;
-
-function clearIntroTimers() {
-  window.clearTimeout(introExitTimer);
-  window.clearTimeout(introEndTimer);
-}
-
-function hideIntro(remember = true) {
+function hideIntro() {
   if (!introScreen || introScreen.classList.contains("is-hidden")) return;
-
   introScreen.classList.add("is-hidden");
-  introScreen.classList.remove("is-exiting");
   introScreen.setAttribute("aria-hidden", "true");
   document.body.classList.remove("intro-active");
-  introVideo?.pause();
-  clearIntroTimers();
-
-  if (remember) {
-    sessionStorage.setItem("digital-dojo-intro-seen", "true");
-  }
+  window.clearTimeout(introTimer);
 }
 
 function playIntro() {
-  if (!introScreen || !introVideo) return;
-
-  clearIntroTimers();
+  if (!introScreen) return;
+  const replacement = introScreen.cloneNode(true);
+  introScreen.replaceWith(replacement);
+  introScreen = replacement;
+  introSkip = document.getElementById("introSkip");
   document.body.classList.add("intro-active");
   introScreen.classList.remove("is-hidden");
-  introScreen.classList.remove("is-exiting");
   introScreen.setAttribute("aria-hidden", "false");
-  introVideo.currentTime = 0;
-
-  const playPromise = introVideo.play();
-  playPromise?.catch(() => hideIntro());
-
-  introExitTimer = window.setTimeout(() => {
-    introScreen?.classList.add("is-exiting");
-  }, INTRO_EXIT_AT);
-
-  introEndTimer = window.setTimeout(() => {
-    hideIntro();
-  }, INTRO_END_AT);
+  introSkip?.addEventListener("click", hideIntro);
+  introTimer = window.setTimeout(hideIntro, 4200);
 }
 
-const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-const introSeen = sessionStorage.getItem("digital-dojo-intro-seen") === "true";
-
-if (introScreen && introVideo && !reduceMotion && !introSeen) {
-  playIntro();
+if (introScreen && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+  document.body.classList.add("intro-active");
+  introTimer = window.setTimeout(hideIntro, 4200);
+  introSkip?.addEventListener("click", hideIntro);
 } else {
-  hideIntro(false);
+  hideIntro();
 }
 
-introSkip?.addEventListener("click", () => hideIntro());
-introVideo?.addEventListener("error", () => hideIntro());
-introVideo?.addEventListener("ended", () => {
-  introScreen?.classList.add("is-exiting");
-  window.setTimeout(() => hideIntro(), 650);
-});
 replayIntro?.addEventListener("click", playIntro);
+
 function closeMenu() {
   menuButton?.classList.remove("is-open");
   nav?.classList.remove("is-open");
