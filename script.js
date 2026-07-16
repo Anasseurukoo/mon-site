@@ -1,5 +1,6 @@
 let introScreen = document.getElementById("introScreen");
 let introSkip = document.getElementById("introSkip");
+let introVideo = document.getElementById("introVideo");
 const replayIntro = document.getElementById("replayIntro");
 const menuButton = document.getElementById("menuButton");
 const nav = document.getElementById("nav");
@@ -8,36 +9,42 @@ const petals = document.getElementById("petals");
 const year = document.getElementById("year");
 
 let introTimer;
+let introFadeTimer;
 
 function hideIntro() {
   if (!introScreen || introScreen.classList.contains("is-hidden")) return;
   introScreen.classList.add("is-hidden");
+  introScreen.classList.remove("is-exiting");
   introScreen.setAttribute("aria-hidden", "true");
   document.body.classList.remove("intro-active");
+  introVideo?.pause();
   window.clearTimeout(introTimer);
+  window.clearTimeout(introFadeTimer);
 }
 
 function playIntro() {
-  if (!introScreen) return;
-  const replacement = introScreen.cloneNode(true);
-  introScreen.replaceWith(replacement);
-  introScreen = replacement;
-  introSkip = document.getElementById("introSkip");
+  if (!introScreen || !introVideo) return;
+  window.clearTimeout(introTimer);
+  window.clearTimeout(introFadeTimer);
   document.body.classList.add("intro-active");
   introScreen.classList.remove("is-hidden");
+  introScreen.classList.remove("is-exiting");
   introScreen.setAttribute("aria-hidden", "false");
-  introSkip?.addEventListener("click", hideIntro);
-  introTimer = window.setTimeout(hideIntro, 4200);
+  introVideo.currentTime = 0;
+  introVideo.play().catch(hideIntro);
+  introFadeTimer = window.setTimeout(() => introScreen.classList.add("is-exiting"), 5150);
+  introTimer = window.setTimeout(hideIntro, 6200);
 }
 
-if (introScreen && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-  document.body.classList.add("intro-active");
-  introTimer = window.setTimeout(hideIntro, 4200);
-  introSkip?.addEventListener("click", hideIntro);
+if (introScreen && introVideo && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+  playIntro();
 } else {
   hideIntro();
 }
 
+introSkip?.addEventListener("click", hideIntro);
+introVideo?.addEventListener("ended", hideIntro);
+introVideo?.addEventListener("error", hideIntro);
 replayIntro?.addEventListener("click", playIntro);
 
 function closeMenu() {
