@@ -1,4 +1,4 @@
-﻿:root {
+:root {
   --ink: #09060f;
   --ink-soft: #110b19;
   --panel: rgba(22, 13, 31, .72);
@@ -1129,7 +1129,7 @@ main {
 }
 
 .airbnb-image {
-  background-image: url("image/project-airbnb.png");
+  background-image: url("image/project-airbnb-cover.jpg");
 }
 
 .bbva-image {

@@ -70,6 +70,9 @@ button { font: inherit; }
 .overview { display: grid; grid-template-columns: .42fr 1.58fr; gap: 48px; }
 .overview h2, .showcase h2, .feature-copy h2, .mobile-story h2, .contribution h2 { margin: 0; font-size: clamp(44px, 6vw, 92px); }
 .overview-copy > p { max-width: 940px; color: #c4b9c9; font-size: clamp(19px, 2.2vw, 30px); line-height: 1.55; }
+.case-note { max-width: 940px; margin-top: 34px; padding: 22px 24px; border: 1px solid rgba(255,56,92,.28); border-radius: 18px; background: rgba(255,56,92,.06); display: grid; gap: 8px; }
+.case-note strong { color: #fff; font: 700 13px "Syne", sans-serif; letter-spacing: .08em; text-transform: uppercase; }
+.case-note span { color: var(--muted); line-height: 1.6; }
 .showcase-head { display: grid; grid-template-columns: .5fr 1.5fr; gap: 40px; align-items: start; margin-bottom: 58px; }
 .shot, .phone-shot { border: 0; padding: 0; background: none; color: inherit; cursor: zoom-in; }
 .shot { width: 100%; overflow: hidden; border-radius: 28px; border: 1px solid var(--line); }
