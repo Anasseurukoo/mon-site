@@ -1,0 +1,476 @@
+@import "tailwindcss";
+
+/* ==========================================================================
+   BuiltByAnas — Digital Dojo design system
+   Original tokens. Dark editorial, near-black grounds, warm ivory text,
+   controlled gold, one restrained Japanese vermilion accent.
+   ========================================================================== */
+
+@theme {
+  /* --- ground ----------------------------------------------------------- */
+  --color-sumi: #070608; /* 墨 near-black — page ground */
+  --color-sumi-deep: #020102; /* deepest well, used behind media */
+  --color-charcoal: #120f13; /* raised surfaces */
+  --color-charcoal-2: #1b161b; /* hover / nested surfaces */
+  --color-petrol: #161216; /* dark petrol — atmospheric depth */
+  --color-petrol-lit: #231a21; /* petrol highlight */
+
+  /* --- ink -------------------------------------------------------------- */
+  --color-ivory: #f5efe4; /* warm ivory — primary text */
+  --color-ivory-dim: #d6ccbf; /* secondary text */
+  --color-steel: #a69c92; /* muted metallic grey — tertiary text, 5.7:1 on sumi */
+  /* Labels are set at 11px, so this has to clear 4.5:1 rather than 3:1.
+     The original #5c6167 measured 3.26:1 and failed. */
+  --color-steel-dim: #8f877f; /* 5.2:1 on sumi-deep */
+
+  /* --- accent ----------------------------------------------------------- */
+  --color-gold: #c89a43; /* controlled gold — primary accent, 8.1:1 on sumi */
+  --color-gold-soft: #ead19b; /* gold on dark, text-safe */
+  --color-vermilion: #b64934; /* 朱 Japanese vermilion — accents and rules */
+  /* Vermilion at full saturation is 4.33:1 — just under AA for body text.
+     This lighter tone is used wherever vermilion carries words. */
+  --color-vermilion-text: #ea8d79; /* 5.7:1 on sumi */
+
+  /* --- lines ------------------------------------------------------------ */
+  --color-line: rgba(242, 236, 225, 0.09);
+  --color-line-strong: rgba(242, 236, 225, 0.18);
+  --color-line-gold: rgba(200, 154, 67, 0.34);
+
+  /* --- type ------------------------------------------------------------- */
+  --font-display: var(--font-instrument), "Times New Roman", serif;
+  --font-sans: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, "SFMono-Regular", monospace;
+  /* System Japanese stack. The site uses roughly sixteen kanji as accents;
+     shipping a webfont for that would cost far more than it returns, so we
+     use what the OS already has. Documented in docs/DESIGN_SYSTEM.md. */
+  --font-jp: "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic UI", "Yu Gothic",
+    "Noto Sans JP", Meiryo, var(--font-geist), sans-serif;
+
+  /* --- editorial scale (clamped, fluid) --------------------------------- */
+  /* Capped so the hero headline stays within one viewport on a 900px-tall
+     laptop screen — an h1 clipped behind the header at scroll 0 is worse than
+     a slightly smaller one. Mobile minimums are deliberately controlled: no
+     role is allowed to dominate a 375px viewport the way an uncapped clamp
+     would. Desktop stays expressive; mobile stays legible in 2–3 lines. */
+
+  /* Display — homepage Hero headline only. */
+  --text-display: clamp(2.25rem, 6.4vw, 6.5rem);
+  --text-display--line-height: 1.04;
+
+  /* Page title — PageHeader h1 on inner routes and homepage section titles. */
+  --text-title: clamp(1.85rem, 5vw, 4.25rem);
+  --text-title--line-height: 1.12;
+
+  /* Section title — sub-headings within a page (kept for compatibility). */
+  --text-heading: clamp(1.35rem, 2.8vw, 2.25rem);
+  --text-heading--line-height: 1.18;
+
+  /* Subheading — smaller editorial heading, e.g. card/feature titles. */
+  --text-subheading: clamp(1.15rem, 1.8vw, 1.5rem);
+  --text-subheading--line-height: 1.28;
+
+  /* Lead / body — intro paragraphs and running copy. */
+  --text-lead: clamp(1.02rem, 1.3vw, 1.34rem);
+  --text-lead--line-height: 1.62;
+  --text-body: clamp(0.95rem, 0.6vw + 0.8rem, 1.05rem);
+  --text-body--line-height: 1.6;
+
+  /* Eyebrow / label / metadata / button — small fixed-ish sizes, not fluid,
+     because they must stay legible at every breakpoint rather than shrink. */
+  --text-label: 0.6875rem;
+  --text-label--line-height: 1.2;
+  --text-label--letter-spacing: 0.22em;
+  --text-eyebrow: 0.75rem;
+  --text-eyebrow--line-height: 1.3;
+  --text-eyebrow--letter-spacing: 0.14em;
+  --text-metadata: 0.75rem;
+  --text-metadata--line-height: 1.4;
+  --text-button: 0.9375rem;
+  --text-button--line-height: 1.2;
+
+  /* --- rhythm ----------------------------------------------------------- */
+  --spacing-gutter: clamp(1.25rem, 4vw, 3.5rem);
+  --spacing-section: clamp(5rem, 12vh, 10rem);
+
+  /* --- motion ----------------------------------------------------------- */
+  --ease-dojo: cubic-bezier(0.22, 1, 0.36, 1); /* primary decelerate */
+  --ease-blade: cubic-bezier(0.65, 0, 0.35, 1); /* symmetrical, transitions */
+  --ease-veil: cubic-bezier(0.16, 1, 0.3, 1); /* long, cinematic reveals */
+}
+
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    /* Native scrolling only — no hijacking, no custom scrollbar takeover. */
+    scroll-behavior: smooth;
+    scroll-padding-top: 6.5rem;
+    background-color: var(--color-sumi);
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    margin: 0;
+    min-height: 100svh;
+    /* `clip` (not `hidden`) so position:sticky keeps working. */
+    overflow-x: clip;
+    background-color: var(--color-sumi);
+    color: var(--color-ivory);
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Locks scroll while the intro / mobile menu owns the viewport. */
+  body[data-scroll-locked="true"] {
+    overflow: hidden;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    margin: 0;
+    font-weight: 400;
+    text-wrap: balance;
+  }
+
+  p {
+    margin: 0;
+    text-wrap: pretty;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  button {
+    font: inherit;
+    color: inherit;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+  }
+
+  input,
+  textarea {
+    font: inherit;
+    color: inherit;
+  }
+
+  img,
+  video,
+  canvas,
+  svg {
+    display: block;
+    max-width: 100%;
+  }
+
+  ::selection {
+    background: var(--color-gold);
+    color: var(--color-sumi);
+  }
+
+  /* Focus: always visible, never removed. Gold ring reads on every surface. */
+  :focus-visible {
+    outline: 2px solid var(--color-gold);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  /* Screen-reader-only utility that becomes visible on focus. */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
+  }
+}
+
+@layer components {
+  /* --- editorial grid ---------------------------------------------------- */
+  .shell {
+    width: 100%;
+    max-width: 90rem;
+    margin-inline: auto;
+    padding-inline: var(--spacing-gutter);
+  }
+
+  .shell-narrow {
+    width: 100%;
+    max-width: 58rem;
+    margin-inline: auto;
+    padding-inline: var(--spacing-gutter);
+  }
+
+  /* --- section index label ("01 — SELECTED WORK") ------------------------ */
+  .label {
+    font-family: var(--font-mono);
+    font-size: var(--text-label);
+    letter-spacing: var(--text-label--letter-spacing);
+    text-transform: uppercase;
+    color: var(--color-steel);
+  }
+
+  /* --- hairline rule with a gold tick, used to open sections ------------- */
+  .rule {
+    position: relative;
+    height: 1px;
+    width: 100%;
+    background: var(--color-line);
+  }
+  .rule::before {
+    content: "";
+    position: absolute;
+    inset-block-start: 0;
+    inset-inline-start: 0;
+    width: 3.5rem;
+    height: 1px;
+    background: var(--color-gold);
+  }
+
+  /* --- display type with optical hanging ---------------------------------*/
+  .display {
+    font-family: var(--font-display);
+    font-size: var(--text-display);
+    line-height: var(--text-display--line-height);
+    letter-spacing: -0.02em;
+  }
+
+  .title {
+    font-family: var(--font-display);
+    font-size: var(--text-title);
+    line-height: var(--text-title--line-height);
+    letter-spacing: -0.015em;
+  }
+
+  .subheading {
+    font-family: var(--font-display);
+    font-size: var(--text-subheading);
+    line-height: var(--text-subheading--line-height);
+    letter-spacing: -0.01em;
+  }
+
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: var(--text-eyebrow);
+    line-height: var(--text-eyebrow--line-height);
+    letter-spacing: var(--text-eyebrow--letter-spacing);
+    text-transform: uppercase;
+  }
+
+  .metadata {
+    font-family: var(--font-mono);
+    font-size: var(--text-metadata);
+    line-height: var(--text-metadata--line-height);
+    letter-spacing: 0.02em;
+  }
+}
+
+@layer utilities {
+  /* ------------------------------------------------------------------------
+     Above-the-fold entrance animations.
+
+     These are CSS rather than JavaScript on purpose. Anything in the first
+     viewport that starts at opacity 0 and waits for React to hydrate before
+     becoming visible pushes Largest Contentful Paint out by the whole
+     hydration cost — measured at roughly two seconds on a cold load here.
+     A CSS animation runs at first paint instead, so the text is on screen
+     immediately and the motion is identical.
+
+     Scroll-triggered reveals further down the page stay in Framer Motion,
+     where the viewport detection is worth the cost.
+
+     `both` fill mode matters: with the reduced-motion rule below forcing
+     duration to ~0, the element lands on the final keyframe and stays
+     visible rather than being stuck at opacity 0.
+     ------------------------------------------------------------------------ */
+  @keyframes bba-rise {
+    from {
+      opacity: 0;
+      transform: translateY(110%);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes bba-fade-up {
+    from {
+      opacity: 0;
+      transform: translateY(16px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes bba-fade {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  /* Slow drift for the intro backdrop — a still frame that breathes. */
+  @keyframes bba-drift {
+    from {
+      transform: scale(1.04) translate3d(0, 0, 0);
+    }
+    to {
+      transform: scale(1.12) translate3d(-1.2%, -1.6%, 0);
+    }
+  }
+
+  @keyframes bba-clip-up {
+    from {
+      opacity: 0;
+      clip-path: inset(0 0 100% 0);
+    }
+    to {
+      opacity: 1;
+      clip-path: inset(0 0 0% 0);
+    }
+  }
+
+  .anim-rise {
+    animation: bba-rise 0.85s var(--ease-veil) both;
+  }
+
+  .anim-fade-up {
+    animation: bba-fade-up 0.7s var(--ease-dojo) both;
+  }
+
+  .anim-fade {
+    animation: bba-fade 0.7s var(--ease-dojo) both;
+  }
+
+  .anim-clip {
+    animation: bba-clip-up 1.15s var(--ease-veil) both;
+  }
+
+  /* Paper grain — one tiny inline SVG, no network request, no image decode. */
+  .grain::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.035;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* Vertical fade used to sink imagery into the page ground. */
+  .fade-to-ground {
+    -webkit-mask-image: linear-gradient(
+      to bottom,
+      transparent,
+      #000 18%,
+      #000 68%,
+      transparent
+    );
+    mask-image: linear-gradient(to bottom, transparent, #000 18%, #000 68%, transparent);
+  }
+
+  .text-gradient-gold {
+    background: linear-gradient(
+      100deg,
+      var(--color-ivory) 0%,
+      var(--color-gold-soft) 46%,
+      var(--color-ivory-dim) 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+}
+
+/* ==========================================================================
+   Reduced motion. Every animation in this project is additionally gated in
+   JS via usePrefersReducedMotion, but this is the hard backstop.
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+
+@layer components {
+  .petal-rain {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 2;
+  }
+
+  .petal {
+    position: absolute;
+    top: -12%;
+    border-radius: 72% 12% 68% 14%;
+    background: radial-gradient(circle at 30% 30%, rgba(255, 208, 196, 0.92) 0%, rgba(201, 84, 63, 0.96) 34%, rgba(140, 34, 24, 0.98) 100%);
+    box-shadow: 0 0 10px rgba(182, 73, 52, 0.18), 0 8px 18px rgba(0, 0, 0, 0.28);
+    opacity: 0.82;
+    transform: rotate(-18deg);
+    animation-name: petal-fall, petal-sway, petal-spin;
+    animation-timing-function: linear, ease-in-out, ease-in-out;
+    animation-iteration-count: infinite, infinite, infinite;
+    will-change: transform;
+  }
+
+  .petal::after {
+    content: "";
+    position: absolute;
+    inset: 18% 24% 42% 24%;
+    border-radius: 999px;
+    background: rgba(255, 241, 236, 0.35);
+    filter: blur(1px);
+  }
+}
+
+@layer utilities {
+  @keyframes petal-fall {
+    from { transform: translate3d(0, -10vh, 0) rotate(-18deg); }
+    to { transform: translate3d(var(--petal-drift, 5vw), 118vh, 0) rotate(28deg); }
+  }
+  @keyframes petal-sway {
+    0%, 100% { margin-left: 0; }
+    50% { margin-left: var(--petal-sway, 2.5vw); }
+  }
+  @keyframes petal-spin {
+    0% { rotate: 0deg; }
+    100% { rotate: 360deg; }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .petal-rain { display: none; }
+}
