@@ -9,10 +9,10 @@ import { ContactSection } from "@/sections/ContactSection";
 import { projects } from "@/data/projects";
 
 export const metadata: Metadata = {
-  title: "Work",
+  title: "Réalisations",
   description:
-    "Portfolio d’Anasse Anida à Casablanca : Loza Optique et son Virtual Try-On, BBA AI, développement web, IA et automatisation, cybersécurité et fondations systèmes.",
-  alternates: { canonical: "/work" },
+    "Portfolio d’Anasse à Casablanca : Loza Optique, Joury Optic, BBA AI, développement web, IA et automatisation, cybersécurité et fondations systèmes.",
+  alternates: { canonical: "/work/" },
 };
 
 /**
@@ -35,7 +35,7 @@ export default function WorkPage() {
         }}
         intro={
           <p>
-            Du Virtual Try-On de Loza Optique au BBA AI intégré au portfolio, puis aux fondations systèmes écrites en C. Chaque
+            De l’essayage virtuel de Joury Optic et Loza Optique au BBA AI conçu par BuiltByAnas, puis aux fondations systèmes. Chaque
             projet indique ce qui peut être vérifié publiquement — et ce qui ne le peut pas.
           </p>
         }

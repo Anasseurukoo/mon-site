@@ -5,8 +5,8 @@ import { ContactSection } from "@/sections/ContactSection";
 export const metadata: Metadata = {
   title: "Contact",
   description:
-    "Contacter Anasse Anida — opportunités IT, collaborations web et projets techniques. Casablanca / Remote.",
-  alternates: { canonical: "/contact" },
+    "Contacter Anasse — opportunités IT, collaborations web et projets techniques. Casablanca / Remote.",
+  alternates: { canonical: "/contact/" },
 };
 
 export default function ContactPage() {

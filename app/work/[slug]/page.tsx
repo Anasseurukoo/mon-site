@@ -8,6 +8,8 @@ import { Lightbox } from "@/components/ui/Lightbox";
 import { StatusBadge } from "@/components/ui/StatusBadge";
 import { ArrowLink } from "@/components/ui/ArrowLink";
 import { getAdjacentProjects, getProject, projects } from "@/data/projects";
+import { profile } from "@/data/profile";
+import { serializeJsonLd, siteUrl } from "@/lib/site";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -25,19 +27,34 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   const projectKeywords = project.slug === "loza-optique"
     ? ["Loza Optique", "Virtual Try-On", "essayage virtuel lunettes", "opticien Casablanca", "développement web Maroc"]
+    : project.slug === "joury-optic"
+      ? ["Joury Optic", "Try Lens", "3D Try Lunettes", "Bella Color", "Virtual Try-On", "eye tracking", "face tracking"]
     : project.slug === "bba-ai-studio-assistant"
-      ? ["BBA AI", "assistant IA", "Gemini API", "IA et automatisation", "BuiltByAnas"]
-      : [project.name, project.category, "Anasse Anida", "BuiltByAnas"];
+      ? ["BBA AI", "assistant IA", "OpenAI API", "IA et automatisation", "BuiltByAnas"]
+      : [project.name, project.category, profile.name, "BuiltByAnas"];
 
   return {
     title: project.name,
     description: project.summary,
     keywords: projectKeywords,
-    alternates: { canonical: `/work/${project.slug}` },
+    alternates: { canonical: `/work/${project.slug}/` },
     openGraph: {
       title: `${project.name} — BuiltByAnas`,
       description: project.summary,
-      images: [{ url: project.cover.src }],
+      images: [
+        {
+          url: project.cover.src,
+          width: project.cover.width,
+          height: project.cover.height,
+          alt: project.cover.alt,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${project.name} | BuiltByAnas`,
+      description: project.summary,
+      images: [project.cover.src],
     },
   };
 }
@@ -52,11 +69,27 @@ export default async function ProjectPage({ params }: PageProps) {
   const facts = [
     { label: "Rôle", value: project.role },
     { label: "Catégorie", value: project.category },
-    { label: "Année", value: project.year },
+    { label: "Période", value: project.year },
   ];
+
+  const projectJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    name: project.name,
+    description: project.summary,
+    url: `${siteUrl}/work/${project.slug}/`,
+    image: `${siteUrl}${project.cover.src}`,
+    creator: { "@type": "Person", name: profile.name },
+    genre: project.category,
+    ...(/^\d{4}$/.test(project.year) ? { dateCreated: project.year } : {}),
+  };
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: serializeJsonLd(projectJsonLd) }}
+      />
       <PageHeader
         label={`${project.category} — ${project.year}`}
         title={project.name}

@@ -6,10 +6,10 @@ import { ContactSection } from "@/sections/ContactSection";
 import { profile } from "@/data/profile";
 
 export const metadata: Metadata = {
-  title: "About",
+  title: "À propos",
   description:
-    "Anasse Anida, ingénieur IT à Casablanca : parcours, développement web, IA et automatisation, cybersécurité et philosophie du Digital Dojo.",
-  alternates: { canonical: "/about" },
+    "Anasse, ingénieur IT à Casablanca : parcours, développement web, IA et automatisation, cybersécurité et philosophie du Digital Dojo.",
+  alternates: { canonical: "/about/" },
 };
 
 export default function AboutPage() {

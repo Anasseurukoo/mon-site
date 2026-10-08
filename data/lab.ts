@@ -16,17 +16,17 @@ export const labEntries: LabEntry[] = [
     status: "research",
     summary:
       "Concevoir un agent utile, documenté et publiquement vérifiable — l’objectif « NEXT » déclaré sur builtbyanas.com.",
-    note: "Objectif déclaré. Aucun code public à ce jour ; l’avancement sera visible dans les dépôts.",
+    note: "Objectif déclaré. Aucun produit public associé à ce projet à ce jour.",
     technologies: ["Python", "LLM tooling", "Open source"],
     verification: "site-only",
   },
   {
     id: "ai-assistant",
-    title: "AI Assistant",
+    title: "Conversational UI — concept",
     status: "concept",
     summary:
-      "Une interface de chat assistée : conversations contextuelles, historique, rendu Markdown et code.",
-    note: "Affiche de concept. L’interface visible est une maquette — aucun produit correspondant n’est déployé et aucun dépôt public ne lui est associé.",
+      "Une étude visuelle de parcours conversationnels : contexte, historique, rendu Markdown et code.",
+    note: "Affiche de concept sans produit associé. BBA AI est un assistant distinct, conçu et développé par BuiltByAnas, et intégré au portfolio.",
     technologies: ["Next.js", "TypeScript", "Tailwind CSS"],
     verification: "placeholder",
     image: {
@@ -43,7 +43,7 @@ export const labEntries: LabEntry[] = [
     status: "concept",
     summary:
       "Une chaîne build → test → conteneurisation → déploiement → supervision, pensée comme un seul flux.",
-    note: "Affiche de concept. Le travail système réel se trouve dans le dépôt alx-system_engineering-devops (Shell) ; les outils affichés sur l’affiche ne sont pas ceux du dépôt.",
+    note: "Affiche de concept. Les outils et étapes affichés illustrent une piste de travail, pas un dépôt ou un produit livré.",
     technologies: ["Docker", "GitHub Actions", "Linux"],
     verification: "placeholder",
     image: {
@@ -53,7 +53,6 @@ export const labEntries: LabEntry[] = [
       width: 1400,
       height: 933,
     },
-    href: "https://github.com/Anasseurukoo/alx-system_engineering-devops",
   },
   {
     id: "binary-tool",
@@ -61,7 +60,7 @@ export const labEntries: LabEntry[] = [
     status: "concept",
     summary:
       "Un outil web de conversion entre systèmes de numération, avec opérations bit à bit et historique.",
-    note: "Affiche de concept. À ne pas confondre avec le dépôt binary_trees, qui porte sur les arbres binaires en C.",
+    note: "Affiche de concept. Elle ne représente pas un outil livré ni un dépôt de code.",
     technologies: ["HTML", "CSS", "JavaScript"],
     verification: "placeholder",
     image: {

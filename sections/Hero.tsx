@@ -19,9 +19,12 @@ export function Hero() {
       aria-labelledby="hero-heading"
     >
       <div className="absolute inset-0" aria-hidden="true">
-        <img
+        <Image
           src="/assets/backgrounds/custom/hero-final-japanese-dojo.webp"
           alt=""
+          fill
+          priority
+          sizes="100vw"
           className="h-full w-full object-cover object-center"
           fetchPriority="high"
         />
@@ -47,14 +50,15 @@ export function Hero() {
                   <span className="inline-flex items-center gap-2.5 border border-gold/40 bg-black/35 px-3.5 py-2 shadow-[0_8px_32px_rgba(0,0,0,0.22)] backdrop-blur-md">
                     <span className="relative flex h-1.5 w-1.5">
                       <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-gold opacity-60" />
-                      <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-gold" />
+                    {!prefersReduced && <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-gold opacity-60" />}
+                    <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-gold" />
                     </span>
                     <span className="label text-ivory-dim">{profile.availability}</span>
                   </span>
 
                   <span className="inline-flex items-center gap-2 border border-white/12 bg-black/20 px-3 py-2 backdrop-blur-md">
-                    <span className="font-display text-base leading-none text-gold-soft">道</span>
-                    <span className="label text-ivory-dim">Japanese identity / cinematic hero</span>
+                    <span className="font-display text-base leading-none text-gold-soft" aria-hidden="true">道</span>
+                    <span className="label text-ivory-dim">Web · systèmes · IA</span>
                   </span>
                 </div>
 

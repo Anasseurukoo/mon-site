@@ -38,7 +38,7 @@ export function SelectedWork() {
                 administration Linux, IA et automatisation.
               </p>
               <p className="mt-3 text-sm leading-relaxed text-steel-dim">
-                Les projets présentés ici sont conçus ou développés par Anasse Anida dans le cadre de BuiltByAnas, à Casablanca.
+                Les projets présentés ici sont conçus ou développés par Anasse dans le cadre de BuiltByAnas, à Casablanca.
               </p>
             </div>
             <ArrowLink href="/work" variant="outline">

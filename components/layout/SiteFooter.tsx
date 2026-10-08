@@ -2,10 +2,9 @@ import Link from "next/link";
 import { BrandMark } from "@/components/common/BrandMark";
 import { footerLegal, navigation } from "@/data/navigation";
 import { profile, socials } from "@/data/profile";
+import { MemorialDoves } from "@/components/motion/MemorialDoves";
 
 export function SiteFooter() {
-  const year = new Date().getFullYear();
-
   return (
     <footer className="relative border-t border-line bg-sumi-deep">
       <div className="grain pointer-events-none absolute inset-0" aria-hidden="true" />
@@ -70,9 +69,24 @@ export function SiteFooter() {
           </div>
         </div>
 
+        <section className="memorial-card mt-14" aria-labelledby="memorial-title">
+          <MemorialDoves />
+          <div className="memorial-copy">
+            <h2 id="memorial-title" className="font-display text-2xl text-ivory sm:text-3xl">
+              À la douce mémoire de Chawkke · 2021
+            </h2>
+            <p className="mt-3 text-sm leading-relaxed text-ivory-dim sm:text-base">
+              Une petite étoile partie trop tôt, dont la lumière restera à jamais dans nos cœurs.
+            </p>
+            <p className="mt-2 font-display text-lg italic text-gold-soft">
+              Avec tout mon amour. ♡
+            </p>
+          </div>
+        </section>
+
         <div className="mt-14 flex flex-col gap-4 border-t border-line pt-8 sm:flex-row sm:items-center sm:justify-between">
           <p className="label text-steel-dim">
-            © {year} {profile.name}. Built with discipline.
+            © 2026 {profile.name} · Site conçu par BuiltByAnas.com
           </p>
 
           <div className="flex items-center gap-6">

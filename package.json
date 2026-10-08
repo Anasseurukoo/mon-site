@@ -1,19 +1,20 @@
 {
-  "name": "builtbyanas-v2-gemini-entry-06",
+  "name": "builtbyanas-v2",
   "version": "2.0.0",
   "private": true,
-  "description": "BuiltByAnas V2 — Digital Dojo portfolio with real BBA AI and Loza Virtual Try-On showcase.",
+  "description": "BuiltByAnas V2 — personal engineering portfolio",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
+    "test:pricing": "node scripts/test-pricing.mjs",
+    "validate:export": "node scripts/validate-static-export.mjs",
     "format": "prettier --write \"**/*.{ts,tsx,css,md,json}\""
   },
   "dependencies": {
     "framer-motion": "^12.42.2",
-    "next": "16.3.3",
+    "next": "16.4.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0"
   },
@@ -24,7 +25,7 @@
     "@types/react": "^19.2.0",
     "@types/react-dom": "^19.2.0",
     "eslint": "~9.39.5",
-    "eslint-config-next": "16.3.3",
+    "eslint-config-next": "16.4.0",
     "prettier": "^3.6.2",
     "tailwindcss": "^4.3.3",
     "typescript": "^5.9.3"

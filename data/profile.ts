@@ -2,15 +2,15 @@ import type { SocialLink } from "@/types";
 
 /**
  * Every field here is taken from builtbyanas.com or from a verified public
- * source. Nothing is invented. See docs/CONTENT_INVENTORY.md for provenance.
+ * source. Nothing is invented. See FINAL-VALIDATION-REPORT.md for provenance.
  */
 export const profile = {
-  name: "Anasse Anida",
+  name: "Anasse",
   brand: "BuiltByAnas",
   concept: "Digital Dojo",
   kanji: "道", // "the way" — used as the brand mark on the current site
   /** Roles as stated on the current site's hero eyebrow. */
-  roles: ["IT Engineer", "Web Development", "Cybersecurity"],
+  roles: ["IT Engineer", "Web Engineering", "Cybersecurity", "Automation & AI"],
   /** Broader framing used across the brief and the site's own AI ambitions. */
   disciplines: ["IT Engineer", "Creative Developer", "AI Builder"],
   location: "Casablanca, Maroc",
@@ -24,7 +24,7 @@ export const profile = {
   },
 
   intro:
-    "Je suis Anasse Anida, ingénieur IT basé à Casablanca. Je construis des expériences web solides, j’automatise les tâches répétitives et j’aborde chaque incident comme un système à comprendre.",
+    "Je suis Anasse, ingénieur IT basé à Casablanca. Je construis des expériences web solides, j’automatise les tâches répétitives et j’aborde chaque incident comme un système à comprendre.",
 
   aboutTitle: {
     lead: "Ingénieur par métier.",
@@ -48,14 +48,14 @@ export const profile = {
   /** The self-describing snippet from the current site's hero console. */
   snippet: [
     { n: "01", code: "const engineer = {" },
-    { n: "02", code: "  name: \"Anasse Anida\"," },
+    { n: "02", code: "  name: \"Anasse\"," },
     { n: "03", code: "  focus: [\"Web\", \"Cyber\"]," },
     { n: "04", code: "  mindset: \"rebuild\"," },
     { n: "05", code: "  shipping: true" },
     { n: "06", code: "};" },
   ],
 
-  email: "Ouzoumarta@icloud.com",
+  email: "Builtbyanass@gmail.com",
 } as const;
 
 /**

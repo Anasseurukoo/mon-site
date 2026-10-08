@@ -2,36 +2,41 @@
  * Deployment-facing configuration, kept in one place so the production domain
  * can be set later without touching page code.
  *
- * `siteUrl` deliberately points at localhost: this is a local prototype and
- * must not emit canonical URLs for a domain it is not deployed to. Set
- * NEXT_PUBLIC_SITE_URL at build time when the site is genuinely deployed.
+ * Production is the default so direct local builds still produce the correct
+ * canonical URLs. Previews can set NEXT_PUBLIC_SITE_URL to their own origin.
  */
-export const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+export const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL ?? "https://builtbyanas.com").replace(/\/+$/, "");
 
 /** True when the site is still running as the local prototype. */
 export const isLocalPrototype = siteUrl.includes("localhost");
 
 export const siteMeta = {
-  title: "Anasse Anida — BuiltByAnas · Digital Dojo",
-  titleTemplate: "%s — BuiltByAnas",
+  title: "Anasse — IT Engineer | BuiltByAnas",
+  titleTemplate: "%s | BuiltByAnas",
   description:
-    "Anasse Anida — ingénieur IT à Casablanca, spécialisé en développement web, IA et automatisation, cybersécurité et systèmes. Découvrez BuiltByAnas, son portfolio et ses projets comme Loza Optique et Virtual Try-On.",
+    "Anasse, ingénieur IT à Casablanca. Web engineering, cybersécurité, automatisation et IA appliquées à des produits numériques concrets.",
   locale: "fr_MA",
   lang: "fr",
   keywords: [
-    "Anasse Anida",
+    "Anasse",
     "BuiltByAnas",
     "ingénieur IT Casablanca",
     "développeur web Casablanca",
     "développement web Maroc",
-    "Next.js TypeScript Maroc",
-    "intelligence artificielle Maroc",
-    "IA et automatisation",
-    "cybersécurité Casablanca",
-    "DevOps Maroc",
-    "Virtual Try-On Maroc",
-    "essayage virtuel lunettes",
+    "web engineering",
+    "intelligence artificielle",
+    "automatisation",
+    "cybersécurité",
+    "Virtual Try-On",
     "Loza Optique",
     "portfolio ingénieur informatique Casablanca",
   ],
 };
+
+/** Escape script-breaking characters in JSON-LD serialized into an HTML script. */
+export function serializeJsonLd(value: unknown): string {
+  return JSON.stringify(value)
+    .replace(/</g, "\\u003c")
+    .replace(/\u2028/g, "\\u2028")
+    .replace(/\u2029/g, "\\u2029");
+}

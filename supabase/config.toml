@@ -1,0 +1,4 @@
+[functions.bba-ai]
+# Public portfolio visitors do not have Supabase user sessions. The handler
+# enforces origin checks, strict input validation and a server-side rate limit.
+verify_jwt = false

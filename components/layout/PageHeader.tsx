@@ -15,7 +15,7 @@ interface PageHeaderProps {
   children?: ReactNode;
   className?: string;
   /**
-   * Id placed on the h1's accessible (sr-only) text node. Lets a section
+   * Id placed on the h1. Lets a section
    * further down the page — one that intentionally has no visible heading of
    * its own because this h1 already introduced it — point its
    * aria-labelledby back at this h1 instead of at nothing.
@@ -74,29 +74,24 @@ export function PageHeader({
           <p className="label text-ivory-dim [text-shadow:0_1px_8px_rgba(0,0,0,0.7)]">{label}</p>
         </div>
 
-        <h1 className="mt-7">
-          <span id={headingId} className="sr-only">
-            {title} {accent}
-          </span>
-          <span aria-hidden="true">
+        <h1 id={headingId} className="mt-7">
+          <MaskText
+            as="span"
+            text={title}
+            className="title block pb-[0.12em] font-display text-ivory"
+            stagger={0.04}
+            immediate
+          />
+          {accent && (
             <MaskText
               as="span"
-              text={title}
-              className="title block pb-[0.12em] font-display text-ivory"
+              text={accent}
+              className="title block pb-[0.16em] font-display italic text-gold-soft"
+              delay={0.1}
               stagger={0.04}
               immediate
             />
-            {accent && (
-              <MaskText
-                as="span"
-                text={accent}
-                className="title block pb-[0.16em] font-display italic text-gold-soft"
-                delay={0.1}
-                stagger={0.04}
-                immediate
-              />
-            )}
-          </span>
+          )}
         </h1>
 
         {intro && (

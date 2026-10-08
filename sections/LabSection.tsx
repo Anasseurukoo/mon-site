@@ -112,7 +112,7 @@ export function LabSection({ limit, showHeading = true }: LabSectionProps) {
                   {entry.href && (
                     <div className="mt-6">
                       <ArrowLink href={entry.href} external>
-                        Dépôt lié
+                        En savoir plus
                       </ArrowLink>
                     </div>
                   )}

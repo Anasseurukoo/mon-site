@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   title: "Digital Dojo",
   description:
     "Compétences et systèmes : IT, web engineering, automatisation, cybersécurité et fondations bas niveau.",
-  alternates: { canonical: "/dojo" },
+  alternates: { canonical: "/dojo/" },
 };
 
 export default function DojoPage() {

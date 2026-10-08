@@ -43,8 +43,8 @@ export function SectionHeading({
           align === "split" ? "grid lg:grid-cols-[1.25fr_1fr] lg:items-end" : "block",
         )}
       >
-        {/* MaskText already exposes the full string to assistive tech, so the
-            accent line must not be duplicated with a second sr-only copy. */}
+        {/* MaskText keeps one visible text copy for both the DOM and assistive
+            technology; animation wrappers do not add a hidden duplicate. */}
         <MaskText
           id={id}
           as={as}

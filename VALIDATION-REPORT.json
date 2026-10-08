@@ -1,0 +1,66 @@
+{
+  "date": "2026-10-08",
+  "sourceOfTruth": "builtbyanas-v2-final-production.zip",
+  "workspace": "builtbyanas-v2-corrective",
+  "validation": [
+    {
+      "check": "npm ci",
+      "status": "passed",
+      "details": "Clean install added 362 packages. npm warned that unrs-resolver has an install script not approved by the current npm policy; the installation, lint, typecheck, and production build still completed successfully."
+    },
+    {
+      "check": "npm run lint",
+      "status": "passed",
+      "details": "ESLint completed without errors or warnings."
+    },
+    {
+      "check": "npm run typecheck",
+      "status": "passed",
+      "details": "TypeScript completed without errors."
+    },
+    {
+      "check": "npm run test:pricing",
+      "status": "passed",
+      "details": "French, English, Moroccan Darija transliteration, Arabic script, contextual follow-up, all six categories, disclaimer, non-pricing statement, and greeting."
+    },
+    {
+      "check": "npm run build",
+      "status": "passed",
+      "details": "Next.js 16.4.0 produced a static export. /work/joury-optic/ was prerendered with the other project routes."
+    },
+    {
+      "check": "npm run validate:export",
+      "status": "passed",
+      "details": "17 exported HTML pages and 785 local href/src/CSS asset references checked. Route, sitemap, metadata, public contact, identity, CTA, footer, ticker, memorial, preserved-asset, and internal-reference checks passed."
+    },
+    {
+      "check": "npm audit",
+      "status": "known finding",
+      "details": "0 critical, 0 moderate, 0 low, and 5 high vulnerability paths through the development-only eslint-config-next → @next/eslint-plugin-next → fast-glob → micromatch → braces@3.0.3 chain. The suggested automatic eslint-config-next fix is an incompatible major-version downgrade; no audit fix was run."
+    },
+    {
+      "check": "browser QA",
+      "status": "unverified",
+      "details": "No browser interaction or visual screenshot QA was performed for this corrective release."
+    },
+    {
+      "check": "production Supabase inspection",
+      "status": "unverified",
+      "details": "The owner reports Healthy status and successful live responses. Deployed function source, logs, and settings were not independently inspected. The local Edge Function and config files match the supplied package byte-for-byte; no production changes were made."
+    },
+    {
+      "check": "targeted secret scan",
+      "status": "passed",
+      "details": "No OpenAI key pattern, Supabase secret/service key pattern, JWT-like credential, populated Redis token assignment, or real .env file was found. .env.example is present with blank secret values."
+    }
+  ],
+  "preservedAssetsSha256": {
+    "public/assets/profile/anasse-digital-dojo-notes.png": "ceac45a26aa4e28fc20570b0974601d99486d4e11968dbec18cc83a4ea66c89d",
+    "public/assets/pricing/builtbyanas-services-tarifs-2026.png": "5da4fd6b29b9b135cf76a76d1c6d2a2a70c5461fb846b7829537e20a1ffd5cf8"
+  },
+  "unchangedSupabaseFilesSha256": {
+    "supabase/functions/bba-ai/index.ts": "c8ef47d3ae1e55551e9b9720f83d5380c52eac6580cf2e4a5935921e7912fe9d",
+    "supabase/config.toml": "071cc438aa6876782ac9e7dc473f71f6dd4eb64cf4e1d42d16782cd90bd53f9d"
+  },
+  "packageVerification": "A clean extraction of the release ZIP passed npm ci, lint, TypeScript, pricing tests, production build, and static export validation. After the final documentation-only report update, the ZIP was regenerated and its integrity, single-root structure, required files, exclusions, and preserved asset hashes were checked again."
+}

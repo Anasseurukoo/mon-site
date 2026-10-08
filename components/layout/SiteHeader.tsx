@@ -22,6 +22,7 @@ import { cn } from "@/lib/utils";
 export function SiteHeader() {
   const { direction, atTop, progress } = useScrollDirection();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [focusWithin, setFocusWithin] = useState(false);
   const pathname = usePathname();
 
   // Route change closes the menu — otherwise it stays open over the new page.
@@ -33,11 +34,18 @@ export function SiteHeader() {
     setMenuOpen(false);
   }
 
-  const hidden = direction === "down" && !atTop && !menuOpen;
+  const hidden = direction === "down" && !atTop && !menuOpen && !focusWithin;
 
   return (
     <>
       <motion.header
+        onFocusCapture={() => setFocusWithin(true)}
+        onBlurCapture={(event) => {
+          const nextTarget = event.relatedTarget;
+          if (!(nextTarget instanceof Node) || !event.currentTarget.contains(nextTarget)) {
+            setFocusWithin(false);
+          }
+        }}
         className={cn(
           "fixed inset-x-0 top-0 z-95 transition-[background-color,border-color,backdrop-filter] duration-500",
           atTop
@@ -103,7 +111,7 @@ export function SiteHeader() {
               type="button"
               onClick={() => setMenuOpen((v) => !v)}
               aria-expanded={menuOpen}
-              aria-controls="mobile-menu"
+              aria-controls={menuOpen ? "mobile-menu" : undefined}
               aria-label={menuOpen ? "Fermer le menu" : "Ouvrir le menu"}
               className="flex h-11 w-11 items-center justify-center border border-line-strong transition-colors hover:border-gold lg:hidden"
             >

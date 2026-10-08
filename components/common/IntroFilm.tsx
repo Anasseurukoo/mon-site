@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
+import { useFocusTrap } from "@/hooks/useFocusTrap";
 
 const KEY = "bba:intro:v07";
 
@@ -14,6 +15,7 @@ export function IntroFilm() {
   const [show, setShow] = useState(false);
   const [leaving, setLeaving] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const overlayRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     // Deliberate exception to the "no setState in an effect body" guidance:
@@ -25,7 +27,7 @@ export function IntroFilm() {
     const force = new URLSearchParams(window.location.search).get("intro") === "1";
     const already = sessionStorage.getItem(KEY) === "seen";
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (force || (!already && !reduceMotion)) {
+    if (!reduceMotion && (force || !already)) {
       // eslint-disable-next-line react-hooks/set-state-in-effect
       setShow(true);
     }
@@ -49,12 +51,18 @@ export function IntroFilm() {
     }, 850);
   };
 
+  useFocusTrap(overlayRef, show, close);
+
   if (!show) return null;
 
   return (
     <div
+      ref={overlayRef}
+      role="dialog"
+      aria-modal="true"
+      aria-label="Entrée cinématique BuiltByAnas"
+      tabIndex={-1}
       className={`fixed inset-0 z-[9999] bg-black transition-opacity duration-[850ms] ${leaving ? "opacity-0" : "opacity-100"}`}
-      aria-label="BuiltByAnas cinematic entrance"
     >
       <video
         ref={videoRef}

@@ -27,8 +27,9 @@ interface MaskTextProps {
 /**
  * Word-by-word mask reveal: each word rides up from behind a clipped line box.
  *
- * The full string stays in the DOM as one accessible text node — the words are
- * `aria-hidden` spans, so screen readers get the sentence, not a word salad.
+ * The animation wrappers contain the only copy of the text. Keeping the words
+ * as ordinary inline text avoids a hidden duplicate sentence in the DOM while
+ * preserving one readable phrase for assistive technology and crawlers.
  *
  * The inter-word space is a text node *between* the clipping spans, not inside
  * them. Inside, it is trailing whitespace in an inline-block and CSS strips it,
@@ -54,47 +55,42 @@ export function MaskText({
   return createElement(
     as,
     { className, id },
-    <>
-      <span className="sr-only">{text}</span>
-      <span aria-hidden="true">
-        {words.map((word, i) => (
-          <Fragment key={`${word}-${i}`}>
+    words.map((word, i) => (
+      <Fragment key={`${word}-${i}`}>
+        <span
+          className="inline-block overflow-hidden align-bottom"
+          style={{
+            paddingBottom: "0.12em",
+            marginBottom: "-0.12em",
+            paddingRight: "0.08em",
+            marginRight: "-0.08em",
+          }}
+        >
+          {immediate ? (
             <span
-              className="inline-block overflow-hidden align-bottom"
-              style={{
-                paddingBottom: "0.12em",
-                marginBottom: "-0.12em",
-                paddingRight: "0.08em",
-                marginRight: "-0.08em",
+              className="anim-rise inline-block"
+              style={{ animationDelay: `${delay + i * stagger}s` }}
+            >
+              {word}
+            </span>
+          ) : (
+            <motion.span
+              className="inline-block"
+              initial={{ opacity: 0, y: prefersReduced ? "0%" : "110%" }}
+              whileInView={{ opacity: 1, y: "0%" }}
+              viewport={viewportOnce}
+              transition={{
+                duration: prefersReduced ? 0.2 : 0.85,
+                ease: EASE.veil,
+                delay: prefersReduced ? 0 : delay + i * stagger,
               }}
             >
-              {immediate ? (
-                <span
-                  className="anim-rise inline-block"
-                  style={{ animationDelay: `${delay + i * stagger}s` }}
-                >
-                  {word}
-                </span>
-              ) : (
-                <motion.span
-                  className="inline-block"
-                  initial={{ opacity: 0, y: prefersReduced ? "0%" : "110%" }}
-                  whileInView={{ opacity: 1, y: "0%" }}
-                  viewport={viewportOnce}
-                  transition={{
-                    duration: prefersReduced ? 0.2 : 0.85,
-                    ease: EASE.veil,
-                    delay: prefersReduced ? 0 : delay + i * stagger,
-                  }}
-                >
-                  {word}
-                </motion.span>
-              )}
-            </span>
-            {i < words.length - 1 ? " " : null}
-          </Fragment>
-        ))}
-      </span>
-    </>,
+              {word}
+            </motion.span>
+          )}
+        </span>
+        {i < words.length - 1 ? " " : null}
+      </Fragment>
+    )),
   );
 }

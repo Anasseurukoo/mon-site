@@ -22,9 +22,9 @@ export const timeline: TimelineEntry[] = [
     phase: "REBUILD",
     kanji: "再建",
     title: "Retour structuré vers l’IT",
-    description: "Linux, Git, Docker, Python, web development et pratique quotidienne.",
+    description: "Linux, Git, Docker, Python, développement web et pratique quotidienne.",
     detail:
-      "Depuis 2017, une reconstruction méthodique autour de la pratique : le C et les systèmes d’abord, puis le web. Dix dépôts publics documentent cette période.",
+      "Depuis 2017, une reconstruction méthodique autour de la pratique : le C et les systèmes d’abord, puis le web. Des dépôts publics documentent cette progression.",
     status: "past",
   },
   {

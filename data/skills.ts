@@ -34,7 +34,8 @@ export const skillGroups: SkillGroup[] = [
     items: [
       { name: "Next.js", note: "Loza Optique — site, Virtual Try-On et surfaces produit" },
       { name: "Virtual Try-On", note: "Loza Optique — essayage virtuel intégré au parcours web" },
-      { name: "TypeScript", note: "Langage principal du dépôt Loza Optique" },
+      { name: "TypeScript", note: "Langage principal des projets web BuiltByAnas" },
+      { name: "React", note: "Interfaces du portfolio et des projets Next.js" },
       { name: "Tailwind CSS", note: "Système de design partagé entre les surfaces du projet" },
       { name: "HTML / CSS / JS", note: "builtbyanas.com, écrit sans framework" },
     ],
@@ -51,7 +52,7 @@ export const skillGroups: SkillGroup[] = [
       { name: "Python", note: "Traitements de fichiers, contrôles et reporting" },
       { name: "Bash", note: "Automatisation de tâches système récurrentes" },
       { name: "Docker", note: "Environnements reproductibles" },
-      { name: "Git & GitHub", note: "18 dépôts publics, historique consultable" },
+      { name: "Git & GitHub", note: "Versionnement et collaboration sur des projets techniques" },
     ],
   },
   {
@@ -78,9 +79,9 @@ export const skillGroups: SkillGroup[] = [
     description:
       "Le socle : mémoire, pointeurs, processus et structures de données, écrits à la main en C.",
     items: [
-      { name: "C", note: "printf, simple_shell, monty — réimplémentés depuis zéro" },
+      { name: "C", note: "Fonctions standard et outils Unix réimplémentés depuis zéro" },
       { name: "Structures de données", note: "Arbres binaires, piles, files" },
-      { name: "Algorithmes", note: "Tris et complexité — sorting_algorithms" },
+      { name: "Algorithmes", note: "Algorithmes de tri et analyse de complexité" },
       { name: "Systèmes Unix", note: "Processus, descripteurs de fichiers, signaux" },
     ],
   },
@@ -97,6 +98,24 @@ export const skillGroups: SkillGroup[] = [
       { name: "Agent open-source", note: "Objectif annoncé — documenté et vérifiable" },
       { name: "Product awareness", note: "Parcours utilisateur et lisibilité de l’offre" },
       { name: "UI systems", note: "Composants partagés entre plusieurs surfaces" },
+      { name: "Supabase", note: "BBA AI — intégration Edge Function" },
     ],
   },
 ];
+
+/** Curated, verified skills for the homepage's visual technology ticker. */
+export const tickerSkills = [
+  "Docker",
+  "Git & GitHub",
+  "Next.js",
+  "TypeScript",
+  "React",
+  "Tailwind CSS",
+  "Virtual Try-On",
+  "Cybersecurity",
+  "Linux",
+  "Python",
+  "Bash",
+  "Automation",
+  "Supabase",
+] as const;

@@ -11,6 +11,7 @@ export const navigation: NavItem[] = [
   { label: "Journey", labelFr: "Parcours", href: "/about#journey", kanji: "道" },
   { label: "Digital Dojo", labelFr: "Expertise", href: "/dojo", kanji: "場" },
   { label: "AI Lab", labelFr: "Laboratoire", href: "/lab", kanji: "研" },
+  { label: "Services", labelFr: "Services & tarifs", href: "/services", kanji: "価" },
   { label: "Contact", labelFr: "Parlons-nous", href: "/contact", kanji: "縁" },
 ];
 

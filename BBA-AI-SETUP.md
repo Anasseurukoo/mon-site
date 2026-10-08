@@ -1,24 +1,11 @@
-# BBA AI — real AI setup
+# BBA AI setup
 
-The frontend is already wired to:
+The function source and explicit public-invocation configuration are in `supabase/functions/bba-ai/` and `supabase/config.toml`.
 
-`https://ydsnzlhcdirhtmmcucbb.supabase.co/functions/v1/bba-ai`
+BBA AI requires these **Supabase Edge Function secrets** before it will call OpenAI:
 
-The Edge Function source is included in `supabase/functions/bba-ai/`.
+- `OPENAI_API_KEY`
+- `UPSTASH_REDIS_REST_URL`
+- `UPSTASH_REDIS_REST_TOKEN`
 
-## Required secret before BBA AI can answer
-
-Add an Edge Function secret named:
-
-`OPENAI_API_KEY`
-
-with your OpenAI API key in the Supabase project settings / Edge Functions secrets.
-
-Never put the OpenAI key in `.env.production`, any `NEXT_PUBLIC_*` variable, GitHub Pages, or frontend code.
-
-## Test
-
-1. Start the site with `START-BUILTBYANAS.bat`.
-2. Open BBA AI.
-3. Ask: `J’ai un magasin d’optique, qu’est-ce que tu me proposes ?`
-4. Confirm the answer is generated and contextual rather than one of the old canned responses.
+The Upstash rate limiter is required and fails closed when its configuration is missing. Keep all three values out of frontend variables and GitHub Pages build settings. For diagnosis, deployment, and request validation, see [BBA-AI-RECOVERY.md](./BBA-AI-RECOVERY.md).

@@ -42,13 +42,13 @@ export function AboutSection({ full = false, showHeading = true }: AboutSectionP
           {/* ------------------------------------------------------ portrait */}
           <div className="relative">
             <RevealImage
-              src="/assets/profile/anasse-900.webp"
-              alt={`Portrait illustré de ${profile.name} dans l’univers du Digital Dojo`}
-              width={900}
-              height={675}
+              src="/assets/profile/anasse-digital-dojo-notes.png"
+              alt={`Illustration éditoriale de ${profile.name} dans l’univers japonais du Digital Dojo`}
+              width={1189}
+              height={1323}
               sizes="(max-width: 1024px) 100vw, 40vw"
               className="aspect-4/3 w-full"
-              imageClassName="object-cover"
+              imageClassName="object-cover object-[center_30%]"
             />
 
             <Reveal delay={0.2}>
@@ -99,7 +99,7 @@ export function AboutSection({ full = false, showHeading = true }: AboutSectionP
                       <span className="block h-2 w-2 rounded-full bg-steel-dim/60" />
                     </span>
                     <span className="font-mono text-xs text-steel-dim">
-                      anida@digital-dojo
+                      anasse@digital-dojo
                     </span>
                   </figcaption>
                   <pre className="overflow-x-auto p-5 font-mono text-xs leading-relaxed text-ivory-dim sm:text-sm">

@@ -4,10 +4,10 @@ import { LabSection } from "@/sections/LabSection";
 import { ContactSection } from "@/sections/ContactSection";
 
 export const metadata: Metadata = {
-  title: "AI Lab",
+  title: "Laboratoire IA",
   description:
     "Expérimentations et travaux en cours : agent open-source, concepts et prototypes, clairement étiquetés.",
-  alternates: { canonical: "/lab" },
+  alternates: { canonical: "/lab/" },
 };
 
 export default function LabPage() {
@@ -24,9 +24,9 @@ export default function LabPage() {
         }}
         intro={
           <p>
-            Building in public suppose d’assumer l’état réel des choses. Ce qui est ici est
-            en cours, en recherche, ou encore à l’état d’affiche — et c’est écrit sur chaque
-            entrée.
+            BBA AI a été conçu et développé par BuiltByAnas et fait partie du portfolio.
+            Cette page distingue ce projet des pistes en cours, des recherches et des
+            concepts encore à l’état d’affiche.
           </p>
         }
       />
