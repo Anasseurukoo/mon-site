@@ -8,7 +8,7 @@ import { StudioAssistant } from "@/components/ai/StudioAssistant";
 import { siteMeta, siteUrl, isLocalPrototype } from "@/lib/site";
 import { profile } from "@/data/profile";
 
-// Self-hosted (no Google Fonts network fetch at build time — the previous
+// Self-hosted (no Google Fonts network fetch at build time â€” the previous
 // next/font/google setup broke production builds in restricted-network
 // environments). Variable font files are bundled locally under public/fonts.
 const geist = localFont({
@@ -53,15 +53,16 @@ export const metadata: Metadata = {
     description: siteMeta.description,
     images: [
       {
-        url: "/assets/brand/og-builtbyanas.webp",
+        url: "/assets/brand/anasse-digital-dojo-social.png",
         width: 1200,
         height: 630,
-        alt: `${profile.brand} — ${profile.concept}`,
+        alt: `${profile.brand} â€” ${profile.concept}`,
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
+    images: ["/assets/brand/anasse-digital-dojo-social.png"],
     title: siteMeta.title,
     description: siteMeta.description,
   },
