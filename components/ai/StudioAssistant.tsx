@@ -9,9 +9,9 @@ import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
 import { AssistantMessage } from "@/components/ai/AssistantMessage";
 import { PricingBrochure } from "@/components/ai/PricingBrochure";
 import { formatPricingReply, matchPricingRequest } from "@/data/pricing";
-
-type Message = { from: "ai" | "user"; text: string; showPricingBrochure?: boolean };
-type ApiMessage = { role: "assistant" | "user"; content: string };
+import type { ChatMessage, UserMessage } from "@/components/ai/message-types";
+import { toApiHistory } from "@/lib/chat-history";
+import { nextRespectModeImage, shouldTriggerRespectMode } from "@/lib/respect-mode";
 
 const QUICK = [
   "Je veux un site premium",
@@ -43,15 +43,12 @@ function messageForError(error: unknown): string {
   return "BBA AI ne peut pas répondre pour le moment. Réessaie ou écris-moi par e-mail.";
 }
 
-async function requestAi(conversation: Message[]): Promise<string> {
+async function requestAi(conversation: ChatMessage[]): Promise<string> {
   const controller = new AbortController();
   const timeoutId = window.setTimeout(() => controller.abort(), 25_000);
 
   try {
-    const history: ApiMessage[] = conversation.slice(-12).map((message) => ({
-      role: message.from === "user" ? "user" : "assistant",
-      content: message.text,
-    }));
+    const history = toApiHistory(conversation);
 
     const response = await fetch(AI_ENDPOINT, {
       method: "POST",
@@ -82,14 +79,16 @@ export function StudioAssistant() {
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [failedConversation, setFailedConversation] = useState<Message[] | null>(null);
+  const [failedConversation, setFailedConversation] = useState<ChatMessage[] | null>(null);
   const [pricingContext, setPricingContext] = useState(false);
-  const [messages, setMessages] = useState<Message[]>([
+  const [messages, setMessages] = useState<ChatMessage[]>([
     {
       from: "ai",
+      kind: "text",
       text: "Salut. Je suis BBA AI. Dis-moi ce que tu veux construire — je t’aide à transformer l’idée en brief clair.",
     },
   ]);
+  const lastRespectImageRef = useRef(-1);
   const inputRef = useRef<HTMLInputElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
   const endRef = useRef<HTMLDivElement>(null);
@@ -114,12 +113,12 @@ export function StudioAssistant() {
     endRef.current?.scrollIntoView({ behavior: prefersReduced ? "auto" : "smooth", block: "end" });
   }, [messages, loading, error, open, prefersReduced]);
 
-  const completeRequest = async (conversation: Message[]) => {
+  const completeRequest = async (conversation: ChatMessage[]) => {
     setLoading(true);
     setError(null);
     try {
       const reply = await requestAi(conversation);
-      setMessages((current) => [...current, { from: "ai", text: reply }]);
+      setMessages((current) => [...current, { from: "ai", kind: "text", text: reply }]);
       setFailedConversation(null);
     } catch (requestError) {
       setFailedConversation(conversation);
@@ -133,9 +132,22 @@ export function StudioAssistant() {
     const text = value.trim();
     if (!text || text.length > 1200 || loading) return;
 
-    const nextMessages = [...messages, { from: "user" as const, text }];
+    const respectMode = shouldTriggerRespectMode(text);
+    const userMessage: UserMessage = respectMode
+      ? { from: "user", kind: "text", text, excludedFromAi: true }
+      : { from: "user", kind: "text", text };
+    const nextMessages: ChatMessage[] = [...messages, userMessage];
     setMessages(nextMessages);
     setInput("");
+
+    if (respectMode) {
+      const selection = nextRespectModeImage(lastRespectImageRef.current);
+      lastRespectImageRef.current = selection.index;
+      setError(null);
+      setFailedConversation(null);
+      setMessages([...nextMessages, { from: "ai", kind: "image", image: selection.image }]);
+      return;
+    }
 
     const pricing = matchPricingRequest(text, pricingContext);
     if (pricing) {
@@ -144,6 +156,7 @@ export function StudioAssistant() {
       setFailedConversation(null);
       setMessages([...nextMessages, {
         from: "ai",
+        kind: "text",
         text: formatPricingReply(pricing),
         showPricingBrochure: true,
       }]);
@@ -243,8 +256,8 @@ export function StudioAssistant() {
                         : "max-w-[90%] border border-line bg-sumi-deep/65 px-4 py-3 text-sm leading-relaxed text-ivory-dim"
                     }
                   >
-                    {message.from === "ai" ? <AssistantMessage text={message.text} /> : message.text}
-                    {message.showPricingBrochure && <PricingBrochure />}
+                    {message.from === "ai" ? <AssistantMessage message={message} /> : message.text}
+                    {message.from === "ai" && message.kind === "text" && message.showPricingBrochure && <PricingBrochure />}
                   </div>
                 ))}
 
