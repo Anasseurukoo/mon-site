@@ -1,4 +1,6 @@
+import Image from "next/image";
 import type { ReactNode } from "react";
+import type { AssistantImageMessage, AssistantTextMessage } from "@/components/ai/message-types";
 
 function safeHref(value: string): string | null {
   try {
@@ -42,7 +44,7 @@ function inlineMarkdown(text: string, keyPrefix: string): ReactNode[] {
 }
 
 /** Small safe Markdown subset: paragraphs, emphasis, links and ordered/unordered lists. */
-export function AssistantMessage({ text }: { text: string }) {
+function AssistantText({ text }: { text: string }) {
   const lines = text.replace(/\r\n?/g, "\n").split("\n");
   const blocks: ReactNode[] = [];
   let paragraph: string[] = [];
@@ -84,4 +86,24 @@ export function AssistantMessage({ text }: { text: string }) {
   flushList();
 
   return <div className="space-y-3 break-words">{blocks}</div>;
+}
+
+export function AssistantMessage({ message }: { message: AssistantTextMessage | AssistantImageMessage }) {
+  if (message.kind === "image") {
+    return (
+      <figure className="overflow-hidden border border-line-gold/60 bg-charcoal">
+        <Image
+          src={message.image.src}
+          alt={message.image.alt}
+          width={message.image.width}
+          height={message.image.height}
+          sizes="(max-width: 640px) 82vw, 470px"
+          className="h-auto w-full object-contain"
+          priority={false}
+        />
+      </figure>
+    );
+  }
+
+  return <AssistantText text={message.text} />;
 }
