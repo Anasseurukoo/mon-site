@@ -1,11 +1,28 @@
-# BBA AI setup
+# BBA AI local and staging setup
 
-The function source and explicit public-invocation configuration are in `supabase/functions/bba-ai/` and `supabase/config.toml`.
+No production action is included or authorized by this package.
 
-BBA AI requires these **Supabase Edge Function secrets** before it will call OpenAI:
+## Local website
 
-- `OPENAI_API_KEY`
-- `UPSTASH_REDIS_REST_URL`
-- `UPSTASH_REDIS_REST_TOKEN`
+```powershell
+npm ci
+npm run test:bba-ai
+npm run typecheck
+npm run lint
+npm run build
+npm run validate:export
+npm run dev
+```
 
-The Upstash rate limiter is required and fails closed when its configuration is missing. Keep all three values out of frontend variables and GitHub Pages build settings. For diagnosis, deployment, and request validation, see [BBA-AI-RECOVERY.md](./BBA-AI-RECOVERY.md).
+Open `http://localhost:3000/` and `http://localhost:3000/ai/`. Set `NEXT_PUBLIC_BBA_AI_ENDPOINT` only when pointing the browser at an authorized local or staging function.
+
+## Supabase staging prerequisites
+
+1. Create or select a non-production Supabase project.
+2. Review and apply `supabase/migrations/202610140001_bba_ai_private_rate_limit.sql` to staging only.
+3. Configure `GEMINI_API_KEY` and a high-entropy `BBA_AI_RATE_LIMIT_SECRET` as Edge Function secrets. Never put either in `NEXT_PUBLIC_*` variables.
+4. Keep `BBA_AI_ENABLE_GEMINI_35_FALLBACK=false` until one controlled call using the exact staging project and credential confirms `gemini-3.5-flash-lite` access and free-tier eligibility.
+5. Optionally tune `BBA_AI_RATE_LIMIT_MAX_REQUESTS` and `BBA_AI_RATE_LIMIT_WINDOW_SECONDS`; defaults are 12 requests per 600 seconds.
+6. Serve or deploy the function to staging only, then run the acceptance checks in `BBA-AI-IMPLEMENTATION.md`.
+
+The rate limiter stores only an HMAC digest of the network address and fixed-window counters. It does not store plaintext IP addresses, prompts, user agents, conversations, or credentials. Anonymous identification is approximate: shared NATs may share a limit, addresses can change, and determined attackers can distribute requests.

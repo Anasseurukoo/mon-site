@@ -12,6 +12,7 @@ import { formatPricingReply, matchPricingRequest } from "@/data/pricing";
 import type { ChatMessage, UserMessage } from "@/components/ai/message-types";
 import { toApiHistory } from "@/lib/chat-history";
 import { nextRespectModeImage, shouldTriggerRespectMode } from "@/lib/respect-mode";
+import { BbaAiError, requestBbaAi } from "../../public/ai/bba-ai-client.js";
 
 const QUICK = [
   "Je veux un site premium",
@@ -25,52 +26,17 @@ const AI_ENDPOINT =
   "https://ydsnzlhcdirhtmmcucbb.supabase.co/functions/v1/bba-ai";
 
 function messageForError(error: unknown): string {
-  if (error instanceof DOMException && error.name === "AbortError") {
-    return "La réponse prend trop de temps. Tu peux réessayer dans un instant.";
-  }
-  if (!(error instanceof Error)) {
+  if (!(error instanceof BbaAiError)) {
     return "La connexion à BBA AI a échoué. Réessaie ou écris-moi par e-mail.";
   }
-  if (error.message === "RATE_LIMITED") {
+  if (error.code === "RATE_LIMITED") {
     return "Tu as atteint la limite temporaire de demandes. Réessaie dans quelques minutes.";
   }
-  if (error.message === "NOT_CONFIGURED") {
-    return "BBA AI est en cours de configuration. Tu peux me contacter directement par e-mail.";
-  }
-  if (error instanceof TypeError) {
+  if (error.code === "NETWORK_ERROR") {
     return "Connexion impossible pour le moment. Vérifie ton réseau puis réessaie.";
   }
+  if (error.code === "TIMEOUT") return "La réponse prend trop de temps. Tu peux réessayer dans un instant.";
   return "BBA AI ne peut pas répondre pour le moment. Réessaie ou écris-moi par e-mail.";
-}
-
-async function requestAi(conversation: ChatMessage[]): Promise<string> {
-  const controller = new AbortController();
-  const timeoutId = window.setTimeout(() => controller.abort(), 25_000);
-
-  try {
-    const history = toApiHistory(conversation);
-
-    const response = await fetch(AI_ENDPOINT, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ messages: history }),
-      signal: controller.signal,
-    });
-
-    const payload = (await response.json().catch(() => null)) as
-      | { reply?: string }
-      | null;
-
-    if (response.status === 429) throw new Error("RATE_LIMITED");
-    if (response.status === 503) throw new Error("NOT_CONFIGURED");
-    if (!response.ok || typeof payload?.reply !== "string" || !payload.reply.trim()) {
-      throw new Error("REQUEST_FAILED");
-    }
-
-    return payload.reply.trim();
-  } finally {
-    window.clearTimeout(timeoutId);
-  }
 }
 
 export function StudioAssistant() {
@@ -80,6 +46,8 @@ export function StudioAssistant() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [failedConversation, setFailedConversation] = useState<ChatMessage[] | null>(null);
+  const [retryBlocked, setRetryBlocked] = useState(false);
+  const [serverFailure, setServerFailure] = useState(false);
   const [pricingContext, setPricingContext] = useState(false);
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
@@ -92,13 +60,18 @@ export function StudioAssistant() {
   const inputRef = useRef<HTMLInputElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
   const endRef = useRef<HTMLDivElement>(null);
+  const requestControllerRef = useRef<AbortController | null>(null);
+  const retryTimerRef = useRef<number | null>(null);
   const prefersReduced = usePrefersReducedMotion();
   const suggestions = useMemo(
     () => (messages.length < 3 && !loading ? QUICK : []),
     [messages.length, loading],
   );
 
-  const close = () => setOpen(false);
+  const close = () => {
+    requestControllerRef.current?.abort();
+    setOpen(false);
+  };
   useScrollLock(open);
   useFocusTrap(panelRef, open, close);
 
@@ -113,18 +86,39 @@ export function StudioAssistant() {
     endRef.current?.scrollIntoView({ behavior: prefersReduced ? "auto" : "smooth", block: "end" });
   }, [messages, loading, error, open, prefersReduced]);
 
+  useEffect(() => () => {
+    requestControllerRef.current?.abort();
+    if (retryTimerRef.current !== null) window.clearTimeout(retryTimerRef.current);
+  }, []);
+
   const completeRequest = async (conversation: ChatMessage[]) => {
+    requestControllerRef.current?.abort();
+    const controller = new AbortController();
+    requestControllerRef.current = controller;
     setLoading(true);
     setError(null);
+    setServerFailure(false);
     try {
-      const reply = await requestAi(conversation);
+      const { reply } = await requestBbaAi(AI_ENDPOINT, toApiHistory(conversation), {
+        signal: controller.signal,
+        hasImages: conversation.some((message) => message.kind === "image"),
+      });
       setMessages((current) => [...current, { from: "ai", kind: "text", text: reply }]);
       setFailedConversation(null);
     } catch (requestError) {
+      if (requestError instanceof DOMException && requestError.name === "AbortError") return;
       setFailedConversation(conversation);
       setError(messageForError(requestError));
+      const retryAfter = requestError instanceof BbaAiError ? requestError.retryAfter : 0;
+      setRetryBlocked(true);
+      if (retryTimerRef.current !== null) window.clearTimeout(retryTimerRef.current);
+      retryTimerRef.current = window.setTimeout(() => setRetryBlocked(false), Math.max(3, retryAfter) * 1_000);
+      setServerFailure(requestError instanceof BbaAiError && ["SERVICE_UNAVAILABLE", "TIMEOUT", "NETWORK_ERROR"].includes(requestError.code));
     } finally {
-      setLoading(false);
+      if (requestControllerRef.current === controller) {
+        requestControllerRef.current = null;
+        setLoading(false);
+      }
     }
   };
 
@@ -167,7 +161,7 @@ export function StudioAssistant() {
   };
 
   const retry = async () => {
-    if (!failedConversation || loading) return;
+    if (!failedConversation || loading || retryBlocked) return;
     await completeRequest(failedConversation);
   };
 
@@ -284,13 +278,18 @@ export function StudioAssistant() {
 
                 {error && (
                   <div className="border border-vermilion/50 bg-sumi-deep/75 p-4" role="alert">
+                    {serverFailure && (
+                      <div data-server-error-meme-slot className="mb-3 flex min-h-24 items-center justify-center border border-dashed border-line-strong px-4 text-center text-xs text-steel">
+                        Illustration d’indisponibilité temporaire — emplacement réservé
+                      </div>
+                    )}
                     <p className="text-sm leading-relaxed text-ivory-dim">{error}</p>
                     {failedConversation && (
                       <button
                         type="button"
                         onClick={() => void retry()}
                         className="mt-3 min-h-11 border border-line-strong px-3 py-2 text-xs text-ivory transition hover:border-gold"
-                        disabled={loading}
+                        disabled={loading || retryBlocked}
                       >
                         Réessayer
                       </button>
@@ -300,7 +299,7 @@ export function StudioAssistant() {
                 <div ref={endRef} />
               </div>
 
-              <form onSubmit={onSubmit} className="border-t border-line p-4">
+              <form onSubmit={onSubmit} className="sticky bottom-0 border-t border-line bg-charcoal p-4">
                 <label htmlFor={`${uid}-input`} className="sr-only">Ton message</label>
                 <div className="flex gap-2">
                   <input

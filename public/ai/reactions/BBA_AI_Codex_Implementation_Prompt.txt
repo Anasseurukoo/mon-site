@@ -1,0 +1,39 @@
+BUILTBYANAS / BBA AI - TARGETED REACTIONS + UX IMPLEMENTATION
+
+EXECUTE this task in the existing BuiltByAnas BBA AI integration workspace. This is an implementation request, not a document-summary request. Read the attached PDF and reference media before changing code. Do not start from scratch.
+
+SOURCES OF TRUTH
+- Approved visuals/interactions: BBA_AI_Dojo_Quill_Final.html and official BuiltByAnas logo.
+- Working functionality: current repository's BBA AI request pipeline, Gemini integration, history, Respect Mode, retries, caching, privacy, pricing, validation and rate limiting.
+- User-supplied reaction images and server-fallback video are the only approved media for these new states.
+
+STEP 0 - SOURCE-LEVEL DIAGNOSIS (brief, evidence-based)
+Inspect the current files, iframe/parent bridge, media renderers, chat scrolling, and server-side request/limit handling. Produce a compact mapping of the actual code paths and root causes. Do not replace approved UI with a React approximation.
+
+STEP 1 - REACTION STATE MACHINE (exclusive, deterministic)
+A. RESPECT MODE: For an abusive user message, preserve existing policy/behavior and rotate between the two supplied Respect Mode images (the office monkey with a guide, and the thoughtful monkey at the meeting). Avoid immediate repetition. Respect Mode must not consume or be confused with server-outage state. Do not display images for normal messages.
+B. TEN-ATTEMPT LIMIT: When the existing product policy permits a maximum of 10 user AI attempts in its defined quota window, enforce the limit server-side and show the supplied monkey/office-on-fire image with a friendly Darija message equivalent to 'You've used your 10 attempts. Come back when your allowance resets.' IMPORTANT: verify and report the actual quota window, whether attempts or successful calls count, and how anonymous users are identified; do not invent a reset time or silently change pricing/rate-limit policy. If no 10-attempt quota is approved in current configuration, implement behind a disabled feature flag and report what approval/configuration is needed. Make sure retry/failures cannot double-charge an attempt.
+C. BUILD AN IDEA / START A PROJECT: When a user selects Build an Idea or explicitly asks to start a project, show the supplied monkey-in-meeting image as a small, non-blocking contextual reaction, then continue the normal AI conversation. Do not trigger on incidental mentions of the word 'project'; use the explicit CTA or validated intent. Never replace the actual answer.
+D. SERVER OUTAGE: On confirmed temporary unavailability of the AI service (e.g. 5xx, network outage, service unavailable, after appropriate retry), display the supplied 'burned out' MP4 and exactly:
+Our AI needs a little break 🥱
+We're experiencing a technical issue. Please try again later.
+Provide accessible video controls or an appropriate non-autoplay fallback. Preserve chat history. Do not misclassify quota exhaustion, user validation, safety/Respect Mode, or ordinary user errors as server outage.
+Use a clearly defined precedence for mutually exclusive error states, with test cases. Reactions must not loop or spam on every render.
+
+STEP 2 - FIX EXISTING UX REGRESSIONS
+1. Existing official logo INSIDE /ai/ navigates TOP-LEVEL same-tab app to '/' on click and keyboard activation. Do NOT add a homepage logo. Secure origin-validated iframe message bridge; avoid open redirects and wildcard handling.
+2. Approved magic feather and purple lighting track the full /ai/ viewport (background, parchment, messages and composer), crossing iframe boundaries. Remove duplicate pointer-coordinate writers; correct z-index and coordinates; non-interactive overlays must not block buttons, typing, selection or scrolling. Respect reduced-motion/touch.
+3. Constrain AI RESPONSE media thumbnails with aspect-ratio preservation, responsive width and optional expansion; do not resize brand/decorative assets.
+4. Scroll the CHAT MESSAGE CONTAINER to the newest message during replies only when the user is near bottom or has just submitted; preserve intentional reading of older messages. Do not scroll the page/iframe itself.
+5. Remove static 'INTERFACE PREVIEW' and 'Demo interface · Connect your BBA AI engine to enable responses.' copy only after verifying that the real engine is connected. If not, report the connection blocker instead of hiding it.
+
+STEP 3 - NON-NEGOTIABLE PRESERVATION
+Preserve exact approved parchment, Japanese atmosphere, lanterns, Fourier desktop/mobile systems, SVG quill, typography, layout, mouse magic, existing homepage hero, Journey and navbar changes, privacy and API behavior. No redesign, no new dependencies without approval, no changes to production secrets or billing. Keep /ai/ independent of shared header/footer if that is the approved behavior.
+
+STEP 4 - QA WITH EVIDENCE
+Test each reaction trigger and negative case; quota boundary 9/10/11 and reset/identity/concurrency; Respect Mode rotation; build-intent false positives; server 5xx vs 429 vs validation; video fallback; image sizing; logo click; full-viewport feather; scroll while streaming and while user reads history. Test at 1440px, 390px and 320px. Check keyboard, reduced motion, console, network, no duplicate requests and no secret exposure. Run existing npm scripts: test:bba-ai, test:pricing (if present), typecheck, lint, build, validate:export. Mark any untested real Gemini/service calls BLOCKED, not PASS. Show changed files and before/after screenshots where possible.
+
+STEP 5 - DELIVERABLE
+Package a complete isolated local-test source ZIP with required local media/assets, package.json and lockfile. Exclude node_modules, .next, out, .git, .env, logs and credentials. Provide an actual accessible ZIP path, PowerShell npm ci / npm run dev commands, QA PASS/FAIL/BLOCKED, actual quota policy, and any remaining gaps. No commit, push, merge, deploy, production/Supabase mutation. STOP for user approval.
+
+IMPORTANT: Implement only authorized scope. If any ambiguity changes pricing, quota, privacy, or behavior, report it rather than guessing. AI FIRST. MAGIC SECOND. DECORATION LAST.

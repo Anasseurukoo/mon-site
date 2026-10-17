@@ -1,0 +1,62 @@
+.link {
+  --fire-x: 50%;
+  --fire-y: 50%;
+  --fire-near: 0;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  border-color: rgba(207, 135, 58, .7);
+  box-shadow: inset 0 0 0 1px rgba(228, 147, 56, .11), 0 0 12px rgba(211, 96, 25, .10);
+}
+.link::before,
+.link::after,
+.embers { position: absolute; inset: 0; pointer-events: none; }
+.link::before {
+  content: "";
+  z-index: -1;
+  background: radial-gradient(130px circle at var(--fire-x) var(--fire-y), rgba(249, 151, 54, .23), transparent 75%);
+  opacity: var(--fire-near);
+  transition: opacity .24s ease;
+}
+.link::after {
+  content: "";
+  border: 1px solid rgba(255, 177, 78, .9);
+  box-shadow: inset 0 0 10px rgba(255, 136, 24, .22), 0 0 15px rgba(242, 115, 23, .34);
+  opacity: .15;
+  transition: opacity .28s ease, box-shadow .28s ease;
+}
+.embers {
+  background-image:
+    linear-gradient(90deg, transparent, rgba(255, 189, 83, .85), transparent),
+    linear-gradient(90deg, transparent, rgba(255, 147, 53, .7), transparent),
+    linear-gradient(180deg, transparent, rgba(255, 189, 83, .7), transparent),
+    linear-gradient(180deg, transparent, rgba(255, 147, 53, .7), transparent);
+  background-size: 48% 2px, 48% 2px, 2px 65%, 2px 65%;
+  background-position: -100% 0, 200% 100%, 0 200%, 100% -100%;
+  background-repeat: no-repeat;
+  opacity: .35;
+  animation: ember-trace 5s linear infinite;
+}
+.label,.arrow { position: relative; z-index: 1; }
+.arrow { color: var(--color-gold, #d8ae70); transition: transform .4s cubic-bezier(.22,1,.36,1); }
+.link:hover,.link:focus-visible { color: var(--color-ivory, #f4ebdd); border-color: #e1a35b; }
+.link[data-fire-state="proximity"]::after { opacity: .25; }
+.link[data-fire-state="hover"]::after { opacity: .8; }
+.link[data-fire-state="hover"] .embers { opacity: .9; animation-duration: 1.5s; }
+.link[data-fire-state="hover"] .arrow { transform: translateX(4px); }
+.link[data-fire-state="activating"]::after,
+.link[data-fire-state="navigating"]::after {
+  opacity: 1;
+  box-shadow: inset 0 0 20px rgba(255, 161, 48, .42), 0 0 30px rgba(252, 117, 28, .65);
+}
+.link[data-fire-state="activating"]::before { opacity: 1; }
+.link[data-fire-state="activating"] .embers { opacity: 1; animation-duration: .42s; }
+.link[data-fire-state="activating"] .arrow { transform: translateX(12px) scale(1.13); }
+.link:focus-visible { outline: 2px solid #e7ba77; outline-offset: 3px; }
+@keyframes ember-trace {
+  to { background-position: 200% 0, -100% 100%, 0 -100%, 100% 200%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .embers { animation: none; opacity: .18; }
+  .link::before,.link::after,.arrow { transition: none; }
+}

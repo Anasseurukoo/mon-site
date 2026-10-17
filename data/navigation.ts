@@ -7,8 +7,8 @@ import type { NavItem } from "@/types";
  */
 export const navigation: NavItem[] = [
   { label: "Work", labelFr: "Projets", href: "/work", kanji: "業" },
-  { label: "About", labelFr: "À propos", href: "/about", kanji: "我" },
   { label: "Journey", labelFr: "Parcours", href: "/about#journey", kanji: "道" },
+  { label: "BBA AI", labelFr: "Assistant", href: "/ai", kanji: "AI" },
   { label: "Digital Dojo", labelFr: "Expertise", href: "/dojo", kanji: "場" },
   { label: "AI Lab", labelFr: "Laboratoire", href: "/lab", kanji: "研" },
   { label: "Services", labelFr: "Services & tarifs", href: "/services", kanji: "価" },
