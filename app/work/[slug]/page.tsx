@@ -30,7 +30,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     : project.slug === "joury-optic"
       ? ["Joury Optic", "Try Lens", "3D Try Lunettes", "Bella Color", "Virtual Try-On", "eye tracking", "face tracking"]
     : project.slug === "bba-ai-studio-assistant"
-      ? ["BBA AI", "assistant IA", "OpenAI API", "IA et automatisation", "BuiltByAnas"]
+      ? ["BBA AI", "assistant IA", "Gemini API", "IA et automatisation", "BuiltByAnas"]
       : [project.name, project.category, profile.name, "BuiltByAnas"];
 
   return {

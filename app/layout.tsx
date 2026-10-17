@@ -2,9 +2,7 @@ import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 
-import { SiteHeader } from "@/components/layout/SiteHeader";
-import { SiteFooter } from "@/components/layout/SiteFooter";
-import { StudioAssistant } from "@/components/ai/StudioAssistant";
+import { SiteChrome } from "@/components/layout/SiteChrome";
 import { siteMeta, siteUrl, isLocalPrototype } from "@/lib/site";
 import { profile } from "@/data/profile";
 
@@ -67,9 +65,7 @@ export const metadata: Metadata = {
     description: siteMeta.description,
   },
   // The local prototype must never be indexed. Flip via NEXT_PUBLIC_SITE_URL.
-  robots: isLocalPrototype
-    ? { index: false, follow: false }
-    : { index: true, follow: true },
+  robots: isLocalPrototype ? { index: false, follow: false } : { index: true, follow: true },
   icons: {
     icon: [{ url: "/assets/brand/favicon.svg", type: "image/svg+xml" }],
   },
@@ -95,10 +91,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           Aller au contenu
         </a>
 
-        <SiteHeader />
-        <main id="main">{children}</main>
-        <SiteFooter />
-        <StudioAssistant />
+        <SiteChrome>{children}</SiteChrome>
       </body>
     </html>
   );

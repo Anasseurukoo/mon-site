@@ -113,10 +113,10 @@ export const projects: Project[] = [
     challenge:
       "Donner au portfolio un assistant réellement conversationnel sans exposer la clé API au frontend ni transformer l’interface en simple démonstration technique.",
     approach:
-      "Interface Next.js, historique de conversation court, fonction Supabase Edge côté serveur et API OpenAI avec contexte cadré et gestion des erreurs.",
+      "Interface Next.js, historique de conversation court, fonction Supabase Edge côté serveur et API Gemini avec contexte cadré et gestion des erreurs.",
     result:
       "BBA AI est conçu et développé par BuiltByAnas. L’interface de chat, la reconnaissance des demandes de prix, la brochure jointe et l’intégration à la fonction Supabase Edge forment un assistant sur mesure, et non un chatbot commercial acheté.",
-    technologies: ["OpenAI API", "Supabase Edge Functions", "Next.js", "TypeScript", "AI", "Prompt Engineering"],
+    technologies: ["Gemini API", "Supabase Edge Functions", "Next.js", "TypeScript", "AI", "Prompt Engineering"],
     status: "live",
     verification: "site-only",
     verificationNote:

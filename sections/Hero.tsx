@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { ArrowLink } from "@/components/ui/ArrowLink";
+import { IgniteDojoLink } from "@/components/ui/IgniteDojoLink";
 import { profile } from "@/data/profile";
 import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
 import { PetalDrift } from "@/components/motion/PetalDrift";
@@ -104,6 +105,7 @@ export function Hero() {
                   <ArrowLink href="/work" variant="outline">
                     Voir mes réalisations
                   </ArrowLink>
+                  <IgniteDojoLink />
                 </div>
               </div>
             </div>

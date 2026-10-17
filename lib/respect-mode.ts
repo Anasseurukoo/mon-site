@@ -7,6 +7,12 @@ export const RESPECT_MODE_IMAGES: AssistantImageMessage["image"][] = [
     width: 1496,
     height: 1051,
   },
+  {
+    src: "/ai/reactions/image(20261016-211222).png",
+    alt: "BuiltByAnas Respect Mode workplace guide",
+    width: 836,
+    height: 745,
+  },
 ];
 
 const META_LANGUAGE =

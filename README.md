@@ -11,7 +11,7 @@ BuiltByAnas is Anasse’s personal engineering portfolio. It uses a static Next.
 - **Public identity:** the display name is Anasse, the brand is BuiltByAnas, and the public contact email is configured in `data/profile.ts`.
 - **Services and pricing:** the owner-approved 2026 brochure is shown on the static `/services/` page and by deterministic local responses inside BBA AI. See `data/pricing.ts` for the shared typed catalogue.
 - **Images and fonts:** local assets in `public/assets/` and `public/fonts/`; no remote font request.
-- **BBA AI:** browser UI sends a short conversation to a public Supabase Edge Function. The function validates input, rate-limits by client IP through Upstash Redis, and calls OpenAI’s Responses API. Provider credentials stay in Supabase secrets.
+- **BBA AI:** browser UI sends a short conversation to a public Supabase Edge Function. The function validates input, applies an HMAC-pseudonymous PostgreSQL rate limit, and calls Gemini. Provider credentials stay in Supabase secrets.
 - **Hosting:** GitHub Pages workflow publishes the static `out/` directory. The Edge Function is deployed separately.
 
 The included GitHub Actions workflow is configured to deploy on pushes to `main` (or a manual workflow dispatch). This package has not been pushed or deployed; treat those triggers as production-impacting if this folder is later connected to the repository.
@@ -35,7 +35,7 @@ Open `http://localhost:3000`. For a production export, run `npm run build`; Next
 
 Copy the variable names from `.env.example` into the appropriate environment. `NEXT_PUBLIC_SITE_URL` and `NEXT_PUBLIC_BBA_AI_ENDPOINT` are public build-time settings. They must never contain credentials.
 
-Set `OPENAI_API_KEY`, `UPSTASH_REDIS_REST_URL`, and `UPSTASH_REDIS_REST_TOKEN` as **Supabase Edge Function secrets**, not as frontend variables or GitHub Pages build variables. BBA AI fails closed with a friendly unavailable response if the provider or rate-limit configuration is missing.
+Set `GEMINI_API_KEY` and `BBA_AI_RATE_LIMIT_SECRET` as **Supabase Edge Function secrets**, not as frontend variables or GitHub Pages build variables. Apply the local private-schema migration before staging. BBA AI fails closed if provider or rate-limit configuration is missing.
 
 Pricing answers and the brochure work without the AI backend. The owner reports production BBA AI is Healthy and responding. See [BBA-AI-RECOVERY.md](./BBA-AI-RECOVERY.md) for the read-only investigation limitation and any future function release considerations.
 
@@ -45,6 +45,7 @@ Pricing answers and the brochure work without the AI backend. The owner reports 
 npm run lint
 npm run typecheck
 npm run test:pricing
+npm run test:bba-ai
 npm run build
 npm run validate:export
 npm audit
@@ -65,4 +66,4 @@ This repository copy is prepared for local review. No deployment or production s
 
 ## Content and privacy
 
-Project copy is based on the supplied source. Private work remains described at a high level; no private source code or credentials are included. The AI assistant sends the visitor’s submitted conversation to the configured OpenAI endpoint. The site advises visitors not to share sensitive information.
+Project copy is based on the supplied source. Private work remains described at a high level; no private source code or credentials are included. The AI assistant sends the visitor’s submitted conversation to the configured Gemini endpoint. The site advises visitors not to share sensitive information.
