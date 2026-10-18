@@ -96,16 +96,27 @@ export function Hero() {
                 </p>
 
                 <div
-                  className="anim-fade-up mt-8 flex flex-wrap items-center gap-3"
+                  className="anim-fade-up mt-8"
                   style={{ animationDelay: "0.39s" }}
                 >
-                  <ArrowLink href="/contact" variant="solid">
-                    Parlons de votre projet
-                  </ArrowLink>
-                  <ArrowLink href="/work" variant="outline">
-                    Voir mes réalisations
-                  </ArrowLink>
-                  <IgniteDojoLink />
+                  <div className="flex flex-wrap items-center gap-3 sm:hidden">
+                    <IgniteDojoLink />
+                    <ArrowLink href="/contact" variant="solid">
+                      Parlons de votre projet
+                    </ArrowLink>
+                    <ArrowLink href="/work" variant="outline">
+                      Voir mes réalisations
+                    </ArrowLink>
+                  </div>
+                  <div className="hidden flex-wrap items-center gap-3 sm:flex">
+                    <ArrowLink href="/contact" variant="solid">
+                      Parlons de votre projet
+                    </ArrowLink>
+                    <ArrowLink href="/work" variant="outline">
+                      Voir mes réalisations
+                    </ArrowLink>
+                    <IgniteDojoLink />
+                  </div>
                 </div>
               </div>
             </div>

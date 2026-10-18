@@ -9,6 +9,37 @@ export const MAX_MESSAGES = 12;
 export const MAX_MESSAGE_CHARS = 1_200;
 export const MAX_TOTAL_CHARS = 6_000;
 
+const IPV4_WITH_OPTIONAL_PORT = /^(\d{1,3}(?:\.\d{1,3}){3})(?::\d{1,5})?$/;
+const IPV6 = /^[0-9a-f:]+$/i;
+
+function normalizeIpCandidate(value: string | null) {
+  if (!value) return null;
+  const candidate = value.trim().replace(/^\[|\]$/g, "");
+  if (!candidate || candidate.length > 64) return null;
+  const ipv4 = IPV4_WITH_OPTIONAL_PORT.exec(candidate);
+  if (ipv4) {
+    const octets = ipv4[1]!.split(".").map(Number);
+    return octets.every((octet) => octet >= 0 && octet <= 255) ? ipv4[1]! : null;
+  }
+  return candidate.includes(":") && IPV6.test(candidate) ? candidate.toLowerCase() : null;
+}
+
+/**
+ * Prefer addresses written by the hosting edge. X-Forwarded-For is only a
+ * compatibility fallback; the global quota remains the anti-spoofing backstop.
+ */
+export function resolveClientAddress(headers: Headers) {
+  for (const candidate of [
+    headers.get("cf-connecting-ip"),
+    headers.get("x-real-ip"),
+    headers.get("x-forwarded-for")?.split(",")[0] ?? null,
+  ]) {
+    const normalized = normalizeIpCandidate(candidate);
+    if (normalized) return normalized;
+  }
+  return null;
+}
+
 export async function readLimitedJson(req: Request, limit = MAX_BODY_BYTES) {
   const declared = Number(req.headers.get("content-length"));
   if (Number.isFinite(declared) && declared > limit) return { error: "too_large" as const };
@@ -51,6 +82,10 @@ export function validateMessages(value: unknown): { messages?: ChatMessage[]; er
     if (typeof message.content !== "string") return { error: "A message is invalid." };
     const content = message.content.trim();
     if (!content || content.length > MAX_MESSAGE_CHARS) return { error: "Each message must contain between 1 and 1200 characters." };
+    if (/[\u0000-\u0008\u000b\u000c\u000e-\u001f\u007f]/u.test(content))
+      return { error: "A message contains unsupported control characters." };
+    if (messages.at(-1)?.role === message.role)
+      return { error: "Conversation roles must alternate." };
     total += content.length;
     messages.push({ role: message.role, content });
   }

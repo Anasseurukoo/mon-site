@@ -35,7 +35,9 @@ Open `http://localhost:3000`. For a production export, run `npm run build`; Next
 
 Copy the variable names from `.env.example` into the appropriate environment. `NEXT_PUBLIC_SITE_URL` and `NEXT_PUBLIC_BBA_AI_ENDPOINT` are public build-time settings. They must never contain credentials.
 
-Set `GEMINI_API_KEY` and `BBA_AI_RATE_LIMIT_SECRET` as **Supabase Edge Function secrets**, not as frontend variables or GitHub Pages build variables. Apply the local private-schema migration before staging. BBA AI fails closed if provider or rate-limit configuration is missing.
+Set `GEMINI_API_KEY`, `SUPABASE_DB_URL`, and `BBA_AI_RATE_LIMIT_SECRET` as **Supabase Edge Function secrets**, not as frontend variables or GitHub Pages build variables. Apply the local private-schema migration before staging. BBA AI fails closed if provider or rate-limit configuration is missing, and uses both per-client and global database-backed request ceilings.
+
+Cloudflare response-header values and the required report-only rollout are documented in `CLOUDFLARE-SECURITY-HEADERS.md`. They are not applied by the static Next.js build.
 
 Pricing answers and the brochure work without the AI backend. The owner reports production BBA AI is Healthy and responding. See [BBA-AI-RECOVERY.md](./BBA-AI-RECOVERY.md) for the read-only investigation limitation and any future function release considerations.
 

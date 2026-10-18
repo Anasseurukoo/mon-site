@@ -37,4 +37,12 @@ assert.ok(!navigation.includes('label: "About"'));
 assert.ok(sql.includes("create schema if not exists private"));
 assert.ok(sql.includes("on conflict (client_hash, window_started_at)"));
 assert.ok(sql.includes("revoke all on function"));
+const edgeFunction = await readFile(
+  new URL("../supabase/functions/bba-ai/index.ts", import.meta.url),
+  "utf8",
+);
+assert.ok(edgeFunction.includes('hmacIdentifier(hmacSecret, "global:bba-ai")'));
+assert.ok(edgeFunction.includes("BBA_AI_GLOBAL_RATE_LIMIT_MAX_REQUESTS"));
+assert.ok(edgeFunction.includes('BBA_AI_ALLOW_LOCALHOST") === "true"'));
+assert.ok(edgeFunction.includes('jsr:@supabase/functions-js@2.118.0/edge-runtime.d.ts'));
 console.log("App Router Dojo, mobile safeguards and rate-limit migration: PASS");
