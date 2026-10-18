@@ -10,27 +10,38 @@ Open PowerShell in the project folder:
 npm ci
 ```
 
-Do not put OpenAI, Supabase service-role, or Upstash secrets in this project. `NEXT_PUBLIC_` values are visible in browser JavaScript.
+Do not put Gemini, Supabase database/service-role, or rate-limit secrets in the Next.js project. `NEXT_PUBLIC_` values are visible in browser JavaScript and must contain public configuration only.
 
-## A. Real AI test (genuine deployed backend)
+## A. Safe local mock test (recommended)
 
-The deployed function currently allows exactly `http://localhost:3000` for local browser development. Port 3001 is not accepted by the deployed function.
+Production should not allow localhost origins. Use the deterministic local mock for routine UI testing.
 
-Make sure no mock override is active, then start Next.js:
+In PowerShell terminal 1:
 
 ```powershell
-Remove-Item Env:NEXT_PUBLIC_BBA_AI_ENDPOINT -ErrorAction SilentlyContinue
-if (Test-Path .env.local) { Write-Warning "Review .env.local and remove any NEXT_PUBLIC_BBA_AI_ENDPOINT mock override before continuing." }
-npm run dev -- --hostname localhost --port 3000
+npm run dev:mock
 ```
 
-Open `http://localhost:3000`. In BBA AI, send a normal project question such as:
+In PowerShell terminal 2:
+
+```powershell
+$env:NEXT_PUBLIC_BBA_AI_ENDPOINT="http://127.0.0.1:3101"
+npm run dev -- --hostname 127.0.0.1 --port 3000
+```
+
+Open `http://127.0.0.1:3000`. The canned local reply confirms that no production AI call was made.
+
+## B. Authorized staging AI test
+
+Use a non-production Supabase function configured with `BBA_AI_ALLOW_LOCALHOST=true`, and set `NEXT_PUBLIC_BBA_AI_ENDPOINT` to that staging URL before starting Next.js. Never place provider, database, service-role, or rate-limit secrets in the Next.js environment.
+
+Send a normal project question such as:
 
 ```text
 Bonjour, quelle est la première étape pour préparer un site vitrine professionnel ?
 ```
 
-A varied, contextual answer confirms the genuine backend. A canned `Réponse locale de test.` answer means mock mode is active and is not proof of real AI connectivity.
+A varied, contextual answer confirms the staging backend. A canned local reply means mock mode is active and is not proof of real AI connectivity.
 
 ## Respect Mode checks
 
