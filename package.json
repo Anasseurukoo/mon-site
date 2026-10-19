@@ -16,10 +16,11 @@
     "test:safe-markdown": "node --experimental-strip-types scripts/test-safe-markdown.ts",
     "test:build-intent": "node --experimental-strip-types scripts/test-build-intent.ts",
     "test:bba-ai-core": "node --experimental-strip-types scripts/test-bba-ai-core.ts",
+    "test:bba-ai-provider": "node --experimental-strip-types scripts/test-bba-ai-provider.ts",
     "test:bba-ai-client": "node scripts/test-bba-ai-client.mjs",
     "test:bba-ai-static": "node scripts/test-bba-ai-static.mjs",
     "test:rate-limit-model": "node scripts/test-rate-limit-model.mjs",
-    "test:bba-ai": "npm run test:respect-mode && npm run test:chat-history && npm run test:safe-markdown && npm run test:build-intent && npm run test:bba-ai-core && npm run test:bba-ai-client && npm run test:rate-limit-model && npm run test:bba-ai-static",
+    "test:bba-ai": "npm run test:respect-mode && npm run test:chat-history && npm run test:safe-markdown && npm run test:build-intent && npm run test:bba-ai-core && npm run test:bba-ai-provider && npm run test:bba-ai-client && npm run test:rate-limit-model && npm run test:bba-ai-static",
     "validate:export": "node scripts/validate-static-export.mjs",
     "format": "prettier --write \"**/*.{ts,tsx,css,md,json}\""
   },
