@@ -28,7 +28,7 @@ export const siteMeta = {
     "automatisation",
     "cybersécurité",
     "Virtual Try-On",
-    "Loza Optique",
+    "Joury Optic",
     "portfolio ingénieur informatique Casablanca",
   ],
 };

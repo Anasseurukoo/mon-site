@@ -1,6 +1,6 @@
-# Cloudflare security headers for BuiltByAnas
+# Cloudflare security headers for BuiltByAnas — PENDING DEPLOYMENT
 
-The site is a Next.js static export hosted by GitHub Pages and proxied by Cloudflare. Next.js `headers()` is not supported for static exports, so apply these values at Cloudflare only after testing them on a preview hostname. No Cloudflare change is made by this repository.
+The site is a Next.js static export hosted by GitHub Pages and proxied by Cloudflare. Next.js `headers()` is not supported for static exports, so apply these values at Cloudflare only after testing them on a preview hostname. No Cloudflare change is made by this repository. **Status: PENDING DEPLOYMENT — repository preparation is complete, but live response headers are not remediated until the owner applies and verifies these Cloudflare rules.**
 
 ## Phase 1 - report-only CSP
 
@@ -12,11 +12,14 @@ X-Content-Type-Options: nosniff
 Referrer-Policy: strict-origin-when-cross-origin
 Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=(), browsing-topics=()
 X-Frame-Options: DENY
+Cross-Origin-Opener-Policy: same-origin
+Cross-Origin-Resource-Policy: same-origin
+Strict-Transport-Security: max-age=31556952
 ```
 
-`'unsafe-inline'` is currently required by the exported Next.js bootstrap/JSON-LD and the approved standalone Dojo document. This policy still restricts scripts to same-origin content and blocks plugins, framing, unexpected connections, and cross-origin assets. Do not remove `'unsafe-inline'` until inline script/style hashes have been generated from the final export and verified after every build.
+`'unsafe-inline'` is currently required by the exported Next.js bootstrap/JSON-LD and the approved standalone Dojo document. `connect-src` permits only the BBA AI Supabase Edge Function in addition to same-origin requests. `frame-src`, `font-src`, and `media-src` remain same-origin because the approved iframe, fonts, images, and video are all shipped with the static site. This policy still restricts scripts to same-origin content and blocks plugins, framing, unexpected connections, and cross-origin assets. Do not remove `'unsafe-inline'` until inline script/style hashes have been generated from the final export and verified after every build.
 
-Keep the existing HSTS value. Do not add `includeSubDomains` or `preload` until every required subdomain is confirmed HTTPS-only.
+The HSTS line intentionally preserves the live value. Do not add `includeSubDomains` or `preload` until every required subdomain is confirmed HTTPS-only. Apply CSP to HTML documents; apply the remaining headers to all same-origin responses where Cloudflare permits it.
 
 ## Phase 2 - enforcement
 

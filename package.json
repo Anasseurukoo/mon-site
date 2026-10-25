@@ -21,12 +21,13 @@
     "test:bba-ai-static": "node scripts/test-bba-ai-static.mjs",
     "test:rate-limit-model": "node scripts/test-rate-limit-model.mjs",
     "test:bba-ai": "npm run test:respect-mode && npm run test:chat-history && npm run test:safe-markdown && npm run test:build-intent && npm run test:bba-ai-core && npm run test:bba-ai-provider && npm run test:bba-ai-client && npm run test:rate-limit-model && npm run test:bba-ai-static",
+    "test:responsive": "node scripts/responsive-qa.mjs",
     "validate:export": "node scripts/validate-static-export.mjs",
     "format": "prettier --write \"**/*.{ts,tsx,css,md,json}\""
   },
   "dependencies": {
     "framer-motion": "^12.42.2",
-    "next": "16.4.0",
+    "next": "16.4.3",
     "react": "^19.2.0",
     "react-dom": "^19.2.0"
   },
@@ -37,12 +38,15 @@
     "@types/react": "^19.2.0",
     "@types/react-dom": "^19.2.0",
     "eslint": "~9.39.5",
-    "eslint-config-next": "16.4.0",
+    "eslint-config-next": "16.4.3",
     "prettier": "^3.6.2",
     "tailwindcss": "^4.3.3",
     "typescript": "^5.9.3"
   },
   "engines": {
     "node": ">=20.9.0"
+  },
+  "overrides": {
+    "zod": "4.6.6"
   }
 }

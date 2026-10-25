@@ -33,9 +33,9 @@ export const timeline: TimelineEntry[] = [
     kanji: "実行",
     title: "Projets réels",
     description:
-      "Airbnb, BBVA Cybersecurity et Loza Optique — jusqu’au Virtual Try-On livré sur un projet réel.",
+      "Airbnb, BBVA Cybersecurity et Joury Optic — jusqu’au Virtual Try-On livré sur un projet réel.",
     detail:
-      "Le passage de l’exercice au livrable : un client réel, des contraintes réelles, puis une fonctionnalité produit différenciante avec le Virtual Try-On de Loza Optique.",
+      "Le passage de l’exercice au livrable : un client réel, des contraintes réelles, puis des expériences produit différenciantes avec le Virtual Try-On de Joury Optic.",
     status: "current",
   },
   {

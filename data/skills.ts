@@ -32,8 +32,8 @@ export const skillGroups: SkillGroup[] = [
     description:
       "Interfaces modernes, responsive design, architecture front-end et intégration de fonctionnalités utiles.",
     items: [
-      { name: "Next.js", note: "Loza Optique — site, Virtual Try-On et surfaces produit" },
-      { name: "Virtual Try-On", note: "Loza Optique — essayage virtuel intégré au parcours web" },
+      { name: "Next.js", note: "Joury Optic — Try Lens, 3D Try Lunettes et surfaces produit" },
+      { name: "Virtual Try-On", note: "Joury Optic — essayage virtuel intégré au parcours web" },
       { name: "TypeScript", note: "Langage principal des projets web BuiltByAnas" },
       { name: "React", note: "Interfaces du portfolio et des projets Next.js" },
       { name: "Tailwind CSS", note: "Système de design partagé entre les surfaces du projet" },
