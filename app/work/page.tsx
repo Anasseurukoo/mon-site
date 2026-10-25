@@ -11,7 +11,7 @@ import { projects } from "@/data/projects";
 export const metadata: Metadata = {
   title: "Réalisations",
   description:
-    "Portfolio d’Anasse à Casablanca : Loza Optique, Joury Optic, BBA AI, développement web, IA et automatisation, cybersécurité et fondations systèmes.",
+    "Portfolio d’Anasse à Casablanca : Joury Optic, BBA AI, développement web, IA et automatisation, cybersécurité et fondations systèmes.",
   alternates: { canonical: "/work/" },
 };
 
@@ -35,7 +35,7 @@ export default function WorkPage() {
         }}
         intro={
           <p>
-            De l’essayage virtuel de Joury Optic et Loza Optique au BBA AI conçu par BuiltByAnas, puis aux fondations systèmes. Chaque
+            De l’essayage virtuel de Joury Optic au BBA AI conçu par BuiltByAnas, puis aux fondations systèmes. Chaque
             projet indique ce qui peut être vérifié publiquement — et ce qui ne le peut pas.
           </p>
         }
@@ -67,6 +67,7 @@ export default function WorkPage() {
                         width={project.cover.width}
                         height={project.cover.height}
                         sizes="(max-width: 1024px) 100vw, 40vw"
+                        priority={i === 0}
                         className="aspect-16/10 w-full"
                         imageClassName="transition-transform duration-[1.2s] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-105"
                       />

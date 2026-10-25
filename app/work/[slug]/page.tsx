@@ -25,10 +25,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const project = getProject(slug);
   if (!project) return { title: "Projet introuvable" };
 
-  const projectKeywords = project.slug === "loza-optique"
-    ? ["Loza Optique", "Virtual Try-On", "essayage virtuel lunettes", "opticien Casablanca", "développement web Maroc"]
-    : project.slug === "joury-optic"
-      ? ["Joury Optic", "Try Lens", "3D Try Lunettes", "Bella Color", "Virtual Try-On", "eye tracking", "face tracking"]
+  const projectKeywords = project.slug === "joury-optic"
+    ? ["Joury Optic", "Try Lens", "3D Try Lunettes", "Bella Color", "Virtual Try-On", "eye tracking", "face tracking"]
     : project.slug === "bba-ai-studio-assistant"
       ? ["BBA AI", "assistant IA", "Gemini API", "IA et automatisation", "BuiltByAnas"]
       : [project.name, project.category, profile.name, "BuiltByAnas"];

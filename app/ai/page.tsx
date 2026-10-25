@@ -8,5 +8,10 @@ export const metadata: Metadata = {
 };
 
 export default function AiPage() {
-  return <ApprovedDojoAi />;
+  return (
+    <>
+      <h1 className="sr-only">BBA AI — Digital Dojo</h1>
+      <ApprovedDojoAi />
+    </>
+  );
 }

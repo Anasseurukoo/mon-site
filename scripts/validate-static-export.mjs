@@ -93,6 +93,10 @@ for (const relativePath of requiredFiles) {
   if (!(await fileExists(path.join(outputRoot, relativePath))))
     failures.push(`Missing required export file: ${relativePath}`);
 }
+assert.ok(
+  !(await fileExists(path.join(outputRoot, "work/loza-optique/index.html"))),
+  "Removed Loza Optique route is still present in the static export",
+);
 
 const requiredSourceFiles = [
   "README.md",
@@ -105,6 +109,7 @@ const requiredSourceFiles = [
   "package.json",
   "package-lock.json",
   ".github/workflows/deploy.yml",
+  "data/archive/loza-optique.ts",
   "CNAME",
 ];
 for (const relativePath of requiredSourceFiles) {
@@ -214,6 +219,11 @@ assert.ok(
   "Homepage introduction does not use the approved display name",
 );
 assert.ok(work.includes("Joury Optic"), "Joury Optic is missing from the projects index");
+const firstJouryLink = work.indexOf('href="/work/joury-optic/"');
+assert.ok(
+  firstJouryLink >= 0 && work.slice(firstJouryLink, firstJouryLink + 2_500).includes(">01<"),
+  "Joury Optic is not rendered as Project 01",
+);
 assert.ok(
   joury.includes("Try Lens — Designed and engineered by BuiltByAnas."),
   "Try Lens attribution is missing",
@@ -366,6 +376,25 @@ assert.ok(
   sitemap.includes("https://builtbyanas.com/work/joury-optic/"),
   "Joury route is missing from sitemap.xml",
 );
+assert.ok(!/loza[ -]?optique/i.test(sitemap), "Loza Optique remains in sitemap.xml");
+
+const aiPage = pages.get("ai/index.html");
+assert.ok(aiPage, "BBA AI page is missing from the static export");
+assert.ok(
+  /<h1[^>]*>BBA AI — Digital Dojo<\/h1>/i.test(aiPage),
+  "BBA AI page is missing its outer document h1",
+);
+
+const publicTextFiles = (await walk(outputRoot)).filter((file) =>
+  /\.(?:html|js|json|xml|txt)$/i.test(file),
+);
+for (const file of publicTextFiles) {
+  const contents = await readFile(file, "utf8");
+  assert.ok(
+    !/loza(?:[ -]?optique|-cover|optique\.com)/i.test(contents),
+    `Loza Optique remains in public output: ${path.relative(outputRoot, file)}`,
+  );
+}
 
 const cssFiles = (await walk(path.join(outputRoot, "_next", "static", "chunks"))).filter(
   (file) => file.endsWith(".css"),
@@ -386,6 +415,6 @@ if (failures.length) {
   process.exitCode = 1;
 } else {
   console.log(
-    `Static export validation passed: ${htmlFiles.length} HTML pages, ${checkedLocalReferences} local href/src targets, route/sitemap/metadata/contact/privacy/footer/portrait/brochure/ticker/memorial checks.`,
+    `Static export validation passed: ${htmlFiles.length} HTML pages, ${checkedLocalReferences} local href/src targets, route/sitemap/metadata/contact/privacy/footer/portrait/brochure/ticker/memorial/AI-heading checks.`,
   );
 }
